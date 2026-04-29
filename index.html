@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover" />
+<title>ONDE — Borne programmes</title>
+<link rel="icon" href="Assets/Logo ONDE.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Cairo:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   ONDE — Tokens (alignés sur la charte 2026)
+   ============================================================ */
+:root{
+  --green-100:#007344;
+  --green-80:#338F69;
+  --green-60:#66AB8E;
+  --green-40:#99C7B3;
+  --green-20:#CCE3D9;
+  --red-100:#e30613;
+  --blue-100:#2e5a78;
+  --blue-60:#829CAE;
+  --beige-100:#fcd4a6;
+  --beige-40:#FEEEDB;
+  --lime-100:#97b022;
+
+  --bg:#ffffff;
+  --bg-soft:#f7f8f6;
+  --ink:#0d1411;
+  --ink-soft:#3a4742;
+  --muted:#727272;
+  --border:#e7e6e2;
+
+  --font-display:"Space Grotesk","Inter",system-ui,sans-serif;
+  --font-body:"Inter",system-ui,sans-serif;
+  --font-arabic:"Cairo","Inter",sans-serif;
+
+  --radius-sm:10px;
+  --radius-md:20px;
+  --radius-lg:32px;
+  --radius-xl:48px;
+}
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0;padding:0;overflow:hidden;background:#0d1411}
+body{
+  font-family:var(--font-body);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  user-select:none;
+  touch-action:manipulation;
+}
+img{max-width:100%;display:block}
+button{font-family:inherit;border:none;background:none;color:inherit;cursor:pointer;padding:0}
+
+/* ============================================================
+   Stage portrait (1080×1920 idéal, fluide pour tout écran)
+   ============================================================ */
+.stage{
+  position:fixed;inset:0;
+  display:grid;place-items:center;
+  background:#0d1411;
+}
+.app{
+  position:relative;
+  width:100vw;
+  height:100vh;
+  background:var(--bg);
+  overflow:hidden;
+}
+/* Sur écran paysage (preview dev) : on simule un cadre portrait */
+@media (min-aspect-ratio: 1/1){
+  .app{
+    width:min(calc(100vh * 9 / 16), 100vw);
+    height:100vh;
+    box-shadow:0 30px 80px rgba(0,0,0,.4);
+    border-radius:0;
+  }
+}
+
+/* ============================================================
+   Vues (transition home <-> player)
+   ============================================================ */
+.view{
+  position:absolute;inset:0;
+  opacity:0;pointer-events:none;
+  transition:opacity .45s ease;
+}
+.view.active{opacity:1;pointer-events:auto}
+
+/* ============================================================
+   HOME — Hub des 6 programmes
+   ============================================================ */
+.home{
+  display:flex;flex-direction:column;
+  background:
+    radial-gradient(140% 70% at 110% -10%, var(--green-20) 0%, transparent 55%),
+    linear-gradient(180deg, #ffffff 0%, #f5faf6 100%);
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  padding-bottom:3vh;
+}
+.home::-webkit-scrollbar{width:0;background:transparent}
+
+/* Vague verte décorative (style affiche) */
+.home::before{
+  content:"";
+  position:absolute;left:-15%;right:-15%;bottom:-30%;
+  height:55%;
+  background:radial-gradient(50% 100% at 50% 0%, var(--green-100) 0%, transparent 70%);
+  opacity:.06;
+  pointer-events:none;
+}
+
+.home-header{
+  position:relative;
+  padding:4vh 6% 1.5vh;
+  display:flex;flex-direction:column;gap:1.6vh;
+  z-index:2;
+  flex:0 0 auto;
+}
+.brand-row{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;
+}
+.brand-cartouche{
+  display:inline-flex;align-items:center;
+}
+.brand-cartouche img{
+  height:11vh;max-height:108px;min-height:68px;width:auto;
+  border-radius:14px;
+  box-shadow:0 6px 22px rgba(0,115,68,.10), 0 2px 6px rgba(0,0,0,.04);
+  object-fit:contain;
+}
+.brand-meta{
+  font-family:var(--font-display);font-weight:700;
+  font-size:clamp(13px, 1.7vh, 17px);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--green-100);line-height:1.35;text-align:right;
+}
+
+.tagline{
+  margin-top:1.4vh;
+  font-family:var(--font-display);font-weight:700;
+  color:var(--green-100);
+  font-size:clamp(28px, 5vh, 54px);
+  line-height:1.02;letter-spacing:-.015em;
+}
+.tagline em{font-style:normal;color:var(--ink)}
+.subline{
+  margin-top:.8vh;color:var(--ink-soft);
+  font-size:clamp(14px, 1.9vh, 20px);max-width:50ch;line-height:1.35;
+}
+
+/* Grille des 6 programmes — 2 colonnes × 3 rangs */
+.home-grid{
+  flex:1 1 auto;
+  min-height:0;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:repeat(3, minmax(0,1fr));
+  gap:1.8vh 4%;
+  padding:1.5vh 5% 2vh;
+  position:relative;z-index:2;
+}
+
+.tile{
+  position:relative;
+  background:none;border:none;padding:0;
+  display:grid;place-items:center;
+  cursor:pointer;
+  min-width:0;min-height:0;
+  text-align:center;
+}
+.tile-card{
+  width:100%;
+  aspect-ratio:4 / 3;
+  max-height:100%;
+  background:#fff;
+  border-radius:var(--radius-lg);
+  display:grid;place-items:center;
+  padding:10% 12%;
+  box-shadow:0 12px 28px rgba(0,115,68,.08), 0 2px 6px rgba(13,20,17,.04);
+  border:1px solid rgba(0,115,68,.06);
+  transition:transform .25s ease, box-shadow .25s ease;
+  overflow:hidden;
+}
+.tile:active .tile-card{
+  transform:scale(.96);
+  box-shadow:0 4px 12px rgba(0,115,68,.10);
+}
+.tile-card img{
+  max-width:88%;max-height:88%;
+  width:auto;height:auto;
+  object-fit:contain;
+  margin:auto;
+}
+
+/* Placeholder pour logos non encore fournis */
+.tile-card .placeholder{
+  aspect-ratio:1/1;max-width:55%;max-height:80%;width:auto;
+  border-radius:50%;
+  background:linear-gradient(135deg, var(--green-40), var(--green-100));
+  display:grid;place-items:center;
+  color:#fff;
+  font-family:var(--font-display);font-weight:700;
+  font-size:clamp(22px, 4vh, 44px);
+  letter-spacing:.04em;
+  box-shadow:inset 0 -6px 16px rgba(0,0,0,.12);
+}
+.tile-card .placeholder.blue{background:linear-gradient(135deg, var(--blue-60), var(--blue-100))}
+.tile-card .placeholder.red{background:linear-gradient(135deg, #f49ba4, var(--red-100))}
+
+.tile-title{
+  flex:0 0 auto;
+  font-family:var(--font-display);font-weight:700;
+  font-size:clamp(11px, 1.5vh, 16px);
+  letter-spacing:.04em;text-transform:uppercase;
+  color:var(--ink);
+  line-height:1.2;
+  padding:0 4px;
+  word-break:keep-all;hyphens:auto;
+}
+
+.home-footer{
+  position:relative;z-index:2;
+  padding:1vh 6% 2vh;
+  display:flex;align-items:center;justify-content:center;
+  gap:12px;color:var(--muted);
+  font-family:var(--font-display);font-size:clamp(10px, 1.25vh, 13px);
+  letter-spacing:.1em;text-transform:uppercase;
+  flex:0 0 auto;
+  white-space:nowrap;
+}
+.home-footer .pulse{
+  width:10px;height:10px;border-radius:50%;background:var(--green-100);
+  box-shadow:0 0 0 0 rgba(0,115,68,.5);
+  animation:pulse 1.8s ease-out infinite;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(0,115,68,.5)}
+  70%{box-shadow:0 0 0 14px rgba(0,115,68,0)}
+  100%{box-shadow:0 0 0 0 rgba(0,115,68,0)}
+}
+
+/* ============================================================
+   PLAYER — Lecteur reel plein écran
+   ============================================================ */
+.player{
+  background:#000;
+  color:#fff;
+}
+.video-stage{
+  position:absolute;inset:0;
+  display:grid;place-items:center;
+  background:#000;
+}
+.video-stage video{
+  width:100%;height:100%;
+  object-fit:cover;
+}
+
+/* Header overlay — discret, en haut à gauche, sans masquer la vidéo */
+.player-header{
+  position:absolute;top:0;left:0;right:0;
+  padding:2.4vh 3.5% 6vh;
+  display:flex;align-items:center;gap:10px;
+  z-index:5;
+  background:linear-gradient(180deg, rgba(0,0,0,.42) 0%, rgba(0,0,0,0) 80%);
+  pointer-events:none;
+}
+.player-header > *{pointer-events:auto}
+
+.btn-back{
+  width:5.4vh;height:5.4vh;min-width:44px;min-height:44px;max-width:54px;max-height:54px;
+  border-radius:50%;
+  background:rgba(0,0,0,.35);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1.5px solid rgba(255,255,255,.28);
+  display:grid;place-items:center;
+  transition:transform .15s ease, background .15s ease;
+  flex:0 0 auto;
+}
+.btn-back:active{transform:scale(.92);background:rgba(0,0,0,.5)}
+.btn-back svg{width:48%;height:48%;color:#fff}
+
+/* Footer overlay (controls) */
+.player-controls{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:8vh 5% 4.5vh;
+  z-index:5;
+  background:linear-gradient(0deg, rgba(0,0,0,.7) 0%, rgba(0,0,0,0) 100%);
+  display:flex;flex-direction:column;align-items:center;gap:2.5vh;
+}
+
+.control-row{
+  display:flex;gap:14px;width:100%;
+}
+.control-btn{
+  flex:1;
+  padding:2.4vh 16px;
+  background:rgba(255,255,255,.03);
+  backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);
+  border:2.4px solid #fff;
+  border-radius:999px;
+  color:#fff;font-family:var(--font-display);font-weight:800;
+  font-size:clamp(14px, 1.95vh, 18px);
+  letter-spacing:.05em;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:transform .15s ease, opacity .15s ease, border-color .15s ease, color .15s ease;
+  text-shadow:0 1px 2px rgba(0,0,0,.35);
+}
+.control-btn:not(:disabled):active{
+  transform:scale(.97);
+  background:rgba(255,255,255,.10);
+}
+.control-btn:disabled{
+  cursor:default;
+  background:rgba(255,255,255,.02);
+  backdrop-filter:blur(1.5px);-webkit-backdrop-filter:blur(1.5px);
+  border-color:rgba(255,255,255,.35);
+  border-width:1.5px;
+  color:rgba(255,255,255,.45);
+  font-weight:600;
+  text-shadow:none;
+}
+.control-btn svg{width:20px;height:20px;stroke-width:2.6}
+.control-btn:disabled svg{stroke-width:2.2}
+
+/* ============================================================
+   Petite "splash" au lancement (premier tap obligatoire si autoplay bloqué)
+   ============================================================ */
+.tap-overlay{
+  position:absolute;inset:0;z-index:30;
+  display:none;
+  background:rgba(0,0,0,.6);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  align-items:center;justify-content:center;flex-direction:column;gap:24px;
+  color:#fff;text-align:center;padding:6vh;
+}
+.tap-overlay.show{display:flex}
+.tap-overlay svg{width:88px;height:88px;color:#fff;opacity:.9;animation:tap 1.6s ease-in-out infinite}
+@keyframes tap{0%,100%{transform:scale(1)}50%{transform:scale(.9)}}
+.tap-overlay h2{font-family:var(--font-display);font-weight:700;font-size:32px;margin:0}
+.tap-overlay p{margin:0;font-size:16px;opacity:.85;max-width:30ch;line-height:1.4}
+</style>
+</head>
+
+<body>
+<div class="stage">
+<main class="app">
+
+  <!-- =========================================================
+       VUE 1 — HOME (hub des 6 programmes)
+       ========================================================= -->
+  <section id="view-home" class="view home active">
+
+    <header class="home-header">
+      <div class="brand-row">
+        <div class="brand-cartouche">
+          <img src="Assets/Logo ONDE.png" alt="ONDE" />
+        </div>
+        <div class="brand-meta">Borne d'information</div>
+      </div>
+
+      <h1 class="tagline">
+        Pour chaque enfant,<br/>
+        <em>un avenir protégé.</em>
+      </h1>
+      <p class="subline">
+        Découvrez les programmes de l'Observatoire National des Droits de l'Enfant.
+      </p>
+    </header>
+
+    <div class="home-grid" id="grid"></div>
+
+    <footer class="home-footer">
+      <span class="pulse"></span>
+      <span>Touchez un programme pour découvrir les vidéos</span>
+    </footer>
+
+  </section>
+
+  <!-- =========================================================
+       VUE 2 — PLAYER (reel vertical + nav prev/next)
+       ========================================================= -->
+  <section id="view-player" class="view player">
+
+    <div class="video-stage">
+      <video id="reel" playsinline preload="metadata"></video>
+    </div>
+
+    <header class="player-header">
+      <button class="btn-back" id="btnBack" aria-label="Retour">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </button>
+    </header>
+
+    <footer class="player-controls">
+      <div class="control-row">
+        <button class="control-btn" id="btnPrev">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 20 9 12l10-8M5 20V4"/>
+          </svg>
+          Précédent
+        </button>
+        <button class="control-btn" id="btnNext">
+          Suivant
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 4l10 8-10 8M19 4v16"/>
+          </svg>
+        </button>
+      </div>
+    </footer>
+
+    <!-- Overlay tactile pour débloquer l'autoplay avec son si nécessaire -->
+    <div class="tap-overlay" id="tapOverlay">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 11V6a3 3 0 0 1 6 0v8"/>
+        <path d="M14 17v-3a3 3 0 0 0-6 0v3"/>
+        <path d="M5 14a8 8 0 0 0 14 0"/>
+        <circle cx="12" cy="20" r="1.5" fill="currentColor"/>
+      </svg>
+      <h2>Touchez pour démarrer</h2>
+      <p>Mettez vos écouteurs et touchez l'écran pour lancer la vidéo avec le son.</p>
+    </div>
+
+  </section>
+
+</main>
+</div>
+
+<script>
+/* ============================================================
+   Données des programmes
+   - Logos déjà fournis : ONDE, Parlement, 2511, Tofoula
+   - Logos à venir       : DNPTE, Harcèlement, Santé mère-enfant
+   - Vidéo de test partout, à remplacer par les vraies plus tard
+   ============================================================ */
+const TEST_VIDEO = "Videos/Video ONDE.mp4";
+
+const PROGRAMS = [
+  {
+    id: "parlement",
+    name: "Parlement de l'enfant",
+    logo: "Assets/Logo Parlement de l'enfant.png",
+    placeholderLetter: "P",
+    placeholderClass: "blue",
+    videos: [TEST_VIDEO, TEST_VIDEO, TEST_VIDEO]
+  },
+  {
+    id: "2511",
+    name: "2511",
+    logo: "Assets/Logo 2511.png",
+    placeholderLetter: "25",
+    placeholderClass: "",
+    videos: [TEST_VIDEO, TEST_VIDEO, TEST_VIDEO]
+  },
+  {
+    id: "dnpte",
+    name: "DNPTE",
+    logo: null,
+    placeholderLetter: "D",
+    placeholderClass: "blue",
+    videos: [TEST_VIDEO, TEST_VIDEO, TEST_VIDEO]
+  },
+  {
+    id: "tofoula",
+    name: "Tofoula",
+    logo: "Assets/Logo Tofoula.png",
+    placeholderLetter: "T",
+    placeholderClass: "",
+    videos: [TEST_VIDEO, TEST_VIDEO, TEST_VIDEO]
+  },
+  {
+    id: "harcelement",
+    name: "Lutte contre le harcèlement scolaire",
+    logo: null,
+    placeholderLetter: "H",
+    placeholderClass: "red",
+    videos: [TEST_VIDEO, TEST_VIDEO, TEST_VIDEO]
+  },
+  {
+    id: "sante",
+    name: "Santé mère-enfant",
+    logo: null,
+    placeholderLetter: "SM",
+    placeholderClass: "",
+    videos: [TEST_VIDEO, TEST_VIDEO, TEST_VIDEO]
+  }
+];
+
+/* ============================================================
+   Rendu de la home
+   ============================================================ */
+const grid = document.getElementById("grid");
+const viewHome = document.getElementById("view-home");
+const viewPlayer = document.getElementById("view-player");
+
+PROGRAMS.forEach(p => {
+  const tile = document.createElement("button");
+  tile.className = "tile";
+  tile.dataset.id = p.id;
+  tile.setAttribute("aria-label", p.name);
+
+  const visual = p.logo
+    ? `<img src="${p.logo}" alt="${p.name}" />`
+    : ``;
+
+  tile.innerHTML = `<div class="tile-card">${visual}</div>`;
+
+  tile.addEventListener("click", () => openProgram(p.id));
+  grid.appendChild(tile);
+});
+
+/* ============================================================
+   Player state
+   ============================================================ */
+const reel = document.getElementById("reel");
+const btnBack = document.getElementById("btnBack");
+const btnPrev = document.getElementById("btnPrev");
+const btnNext = document.getElementById("btnNext");
+const tapOverlay = document.getElementById("tapOverlay");
+
+let currentProgram = null;
+let currentIndex = 0;
+
+function openProgram(id){
+  currentProgram = PROGRAMS.find(p => p.id === id);
+  currentIndex = 0;
+  updateNavButtons();
+  switchView(viewPlayer);
+  loadVideo(0, /*tryUnmuted*/true);
+}
+
+function backToHome(){
+  reel.pause();
+  reel.removeAttribute("src");
+  reel.load();
+  tapOverlay.classList.remove("show");
+  switchView(viewHome);
+}
+
+function switchView(target){
+  document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+  target.classList.add("active");
+}
+
+function updateNavButtons(){
+  btnPrev.disabled = currentIndex === 0;
+  btnNext.disabled = currentIndex === currentProgram.videos.length - 1;
+}
+
+function loadVideo(idx, tryUnmuted){
+  currentIndex = idx;
+  const src = currentProgram.videos[idx];
+  reel.src = src;
+  reel.muted = !tryUnmuted; // on tente direct avec son
+  reel.loop = false;
+  reel.controls = false;
+  reel.playsInline = true;
+
+  const playPromise = reel.play();
+  if (playPromise && playPromise.catch){
+    playPromise.catch(() => {
+      // L'autoplay avec son est bloqué — on affiche l'overlay tactile.
+      tapOverlay.classList.add("show");
+    });
+  }
+  updateNavButtons();
+}
+
+reel.addEventListener("ended", () => {
+  // Auto-passage à la vidéo suivante si possible
+  if (currentIndex < currentProgram.videos.length - 1){
+    loadVideo(currentIndex + 1, true);
+  }
+});
+
+/* Contrôles */
+btnBack.addEventListener("click", backToHome);
+btnPrev.addEventListener("click", () => {
+  if (currentIndex > 0) loadVideo(currentIndex - 1, true);
+});
+btnNext.addEventListener("click", () => {
+  if (currentIndex < currentProgram.videos.length - 1) loadVideo(currentIndex + 1, true);
+});
+
+/* Overlay tactile : on relance avec son */
+tapOverlay.addEventListener("click", () => {
+  reel.muted = false;
+  reel.play().then(() => {
+    tapOverlay.classList.remove("show");
+  }).catch(() => {
+    // dernier recours : muet
+    reel.muted = true;
+    reel.play();
+    tapOverlay.classList.remove("show");
+  });
+});
+
+/* Empêche le menu contextuel et la sélection sur la borne */
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
+
+/* Plein écran au double-tap sur la borne (utile pour preview dev) */
+document.addEventListener("dblclick", () => {
+  if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+  else document.exitFullscreen?.();
+});
+</script>
+</body>
+</html>
