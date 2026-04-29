@@ -1,0 +1,1178 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ONDE — Design System 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cairo:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Palette principale (drapeau marocain) — Charte 2026 */
+  --green-100:#007344;
+  --green-80:#338F69;
+  --green-60:#66AB8E;
+  --green-40:#99C7B3;
+  --green-20:#CCE3D9;
+  --red-100:#e30613;
+  --red-80:#E9384A;
+  --red-60:#EE6A77;
+  --red-40:#F49BA4;
+  --red-20:#F9CDD1;
+  --black-100:#000000;
+  --black-80:#333333;
+  --black-60:#666666;
+  --black-40:#999999;
+  --black-20:#cccccc;
+
+  /* Palette complémentaire */
+  --blue-100:#2e5a78;
+  --blue-80:#587B93;
+  --blue-60:#829CAE;
+  --blue-40:#ABBDC9;
+  --blue-20:#D5DEE4;
+  --beige-100:#fcd4a6;
+  --beige-80:#FDDDB8;
+  --beige-60:#FDE5C9;
+  --beige-40:#FEEEDB;
+  --beige-20:#FEF6ED;
+  --lime-100:#97b022;
+  --lime-80:#ACC04E;
+  --lime-60:#C1D07B;
+  --lime-40:#D5DFA7;
+  --lime-20:#EAEFD3;
+
+  /* Surfaces & texte */
+  --bg:#ffffff;
+  --bg-soft:#f7f8f6;
+  --surface:#ffffff;
+  --border:#e7e6e2;
+  --ink:#0d1411;
+  --ink-soft:#3a4742;
+  --muted:#727272;
+
+  /* Typo (Co — Dalton Maag — fallbacks web) */
+  --font-display:"Space Grotesk","Inter",system-ui,sans-serif;
+  --font-body:"Inter",system-ui,sans-serif;
+  --font-arabic:"Cairo","Inter",sans-serif;
+
+  /* Rayons & ombres */
+  --radius-sm:8px;
+  --radius-md:14px;
+  --radius-lg:24px;
+  --radius-xl:36px;
+  --shadow-sm:0 1px 2px rgba(13,20,17,.06), 0 1px 3px rgba(13,20,17,.04);
+  --shadow-md:0 6px 18px rgba(13,20,17,.07), 0 2px 4px rgba(13,20,17,.05);
+  --shadow-lg:0 24px 48px rgba(0,115,68,.18);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--font-body);
+  color:var(--ink);
+  background:var(--bg);
+  -webkit-font-smoothing:antialiased;
+  font-size:16px;
+  line-height:1.55;
+}
+a{color:var(--green-100);text-decoration:none}
+a:hover{text-decoration:underline}
+img{max-width:100%;display:block}
+hr{border:none;border-top:1px solid var(--border);margin:0}
+
+.container{max-width:1240px;margin:0 auto;padding:0 32px}
+
+/* ========== TOP NAV ========== */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:saturate(140%) blur(10px);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  height:64px;
+}
+.brand{display:flex;align-items:center;gap:12px;font-family:var(--font-display);font-weight:700}
+.brand-mark{
+  width:36px;height:36px;border-radius:10px;
+  background:var(--green-100);
+  display:grid;place-items:center;color:#fff;font-weight:800;
+  font-family:var(--font-display);
+  letter-spacing:.5px;
+}
+.nav-links{display:flex;gap:28px;flex-wrap:wrap}
+.nav-links a{color:var(--ink-soft);font-size:14px;font-weight:500}
+.nav-links a:hover{color:var(--green-100);text-decoration:none}
+
+/* ========== HERO ========== */
+.hero{
+  position:relative;overflow:hidden;
+  background:var(--green-100);
+  color:#fff;
+  border-radius:0 0 var(--radius-xl) var(--radius-xl);
+}
+.hero-inner{
+  position:relative;z-index:2;
+  padding:96px 0 120px;
+  display:grid;grid-template-columns:1.3fr .9fr;gap:48px;align-items:center;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:6px 12px;border-radius:999px;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);
+  font-family:var(--font-display);font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+  color:#fff;
+}
+.hero h1{
+  font-family:var(--font-display);
+  font-size:clamp(40px,6vw,80px);
+  line-height:.98;letter-spacing:-.02em;
+  margin:24px 0 16px;font-weight:700;
+}
+.hero h1 .accent{color:var(--lime-100)}
+.hero-sub{font-size:18px;color:rgba(255,255,255,.85);max-width:48ch}
+.hero-meta{
+  margin-top:36px;display:flex;gap:32px;flex-wrap:wrap;
+  font-family:var(--font-display);font-size:13px;letter-spacing:.16em;
+  text-transform:uppercase;color:rgba(255,255,255,.75);
+}
+.hero-card{
+  position:relative;justify-self:end;
+  width:100%;max-width:380px;aspect-ratio:3/4;
+  border-radius:var(--radius-lg);
+  background:#fff;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:var(--shadow-lg);
+}
+.hero-card img{width:78%;height:auto}
+/* Ornement ascendant (vague) */
+.hero::before{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(120% 60% at 90% 100%, rgba(255,255,255,.08), transparent 60%),
+    linear-gradient(transparent 60%, rgba(255,255,255,.08) 60%);
+  mask: radial-gradient(140% 90% at 10% 130%, black 38%, transparent 38%);
+  -webkit-mask: radial-gradient(140% 90% at 10% 130%, black 38%, transparent 38%);
+  background-color: rgba(255,255,255,.10);
+}
+
+/* ========== SECTIONS ========== */
+section.block{padding:96px 0;border-bottom:1px solid var(--border)}
+section.block:last-of-type{border-bottom:none}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:40px}
+.section-head h2{
+  font-family:var(--font-display);
+  font-size:clamp(28px,3.4vw,44px);
+  line-height:1.05;letter-spacing:-.01em;margin:0;font-weight:700;
+}
+.eyebrow{
+  display:inline-block;
+  font-family:var(--font-display);
+  font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--green-100);font-weight:600;margin-bottom:12px;
+}
+.lede{max-width:62ch;color:var(--ink-soft);font-size:17px}
+
+/* ========== GRID UTILS ========== */
+.grid{display:grid;gap:24px}
+.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.grid-5{grid-template-columns:repeat(5,minmax(0,1fr))}
+@media (max-width:900px){
+  .grid-2,.grid-3,.grid-4,.grid-5{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hero-inner{grid-template-columns:1fr;padding:72px 0 88px}
+  .hero-card{justify-self:start;max-width:300px}
+}
+@media (max-width:560px){
+  .grid-2,.grid-3,.grid-4,.grid-5{grid-template-columns:1fr}
+  .container{padding:0 20px}
+}
+
+/* ========== CARDS ========== */
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-md);
+  padding:24px;
+  box-shadow:var(--shadow-sm);
+}
+.card h3{margin:0 0 8px;font-family:var(--font-display);font-size:18px}
+.card p{margin:0;color:var(--ink-soft);font-size:15px}
+
+/* ========== BRAND VALUES ========== */
+.values .card{position:relative;padding:28px}
+.values .card .num{
+  font-family:var(--font-display);font-weight:700;
+  color:var(--green-100);font-size:14px;letter-spacing:.2em;
+}
+.values .card h3{margin-top:8px;font-size:22px}
+.values .card p{margin-top:8px}
+
+/* ========== LOGO ========== */
+.logo-stage{
+  background:var(--bg-soft);
+  border:1px solid var(--border);
+  border-radius:var(--radius-md);
+  padding:32px;display:flex;align-items:center;justify-content:center;
+  min-height:220px;
+}
+.logo-stage.dark{background:var(--green-100)}
+.logo-stage.dark img{filter:none}
+.logo-stage img{max-width:78%}
+.logo-rules{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:24px}
+.logo-rule{
+  background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:14px;font-size:13px;color:var(--ink-soft);
+  display:flex;align-items:flex-start;gap:10px;
+}
+.logo-rule .x{
+  flex:0 0 22px;width:22px;height:22px;border-radius:50%;
+  background:var(--red-100);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px;
+}
+
+/* ========== TYPOGRAPHY ========== */
+.type-row{
+  display:grid;grid-template-columns:160px 1fr;gap:24px;align-items:baseline;
+  padding:24px 0;border-bottom:1px dashed var(--border);
+}
+.type-row:last-child{border-bottom:none}
+.type-meta{font-family:var(--font-display);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.type-sample{font-family:var(--font-display);color:var(--ink);line-height:1}
+.t-display{font-size:64px;font-weight:700;letter-spacing:-.02em}
+.t-h1{font-size:48px;font-weight:700;letter-spacing:-.01em}
+.t-h2{font-size:36px;font-weight:600}
+.t-h3{font-size:24px;font-weight:600}
+.t-body{font-family:var(--font-body);font-size:18px;font-weight:400;line-height:1.55}
+.t-small{font-family:var(--font-body);font-size:14px;color:var(--ink-soft)}
+.t-arabic{font-family:var(--font-arabic);font-size:36px;direction:rtl}
+
+/* ========== COLOR PALETTE ========== */
+.swatch{
+  border-radius:var(--radius-md);
+  overflow:hidden;border:1px solid var(--border);
+  background:#fff;
+}
+.swatch .chip{height:120px;display:flex;align-items:flex-end;padding:14px;color:#fff;font-weight:600;font-family:var(--font-display);font-size:14px;letter-spacing:.05em}
+.swatch .meta{padding:14px 16px}
+.swatch .meta .name{font-family:var(--font-display);font-weight:700;font-size:14px;letter-spacing:.05em}
+.swatch .meta .hex{color:var(--ink-soft);font-size:12px;margin-top:2px;font-family:"Space Grotesk",monospace}
+.swatch .meta .cmyk{color:var(--muted);font-size:11px;margin-top:2px;font-family:"Space Grotesk",monospace}
+.tints{display:grid;grid-template-columns:repeat(5,1fr);height:64px;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-top:14px}
+.tints span{display:grid;place-items:center;color:#fff;font-size:11px;font-family:var(--font-display);font-weight:600;letter-spacing:.1em}
+
+/* ========== ORNAMENT DEMO ========== */
+.ornament-demo{
+  position:relative;
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+  aspect-ratio:16/9;
+  background:var(--green-100);
+  color:#fff;
+  isolation:isolate;
+}
+.ornament-demo .wave{
+  position:absolute;inset:0;z-index:0;
+  background: radial-gradient(140% 110% at -10% 130%, var(--green-60) 0 38%, transparent 38%);
+}
+.ornament-demo .content{position:relative;z-index:1;padding:48px 56px;max-width:60%}
+.ornament-demo .content h3{
+  font-family:var(--font-display);font-weight:700;
+  font-size:clamp(22px,3vw,40px);text-transform:uppercase;letter-spacing:.01em;line-height:1;margin:0 0 12px;
+}
+.ornament-demo .content p{color:rgba(255,255,255,.85);font-size:15px;max-width:36ch;margin:0}
+.ornament-demo .cartouche{
+  position:absolute;right:24px;bottom:24px;z-index:2;
+  background:#fff;border-radius:34px 34px 34px 80px;
+  padding:14px 22px 14px 18px;
+  display:flex;align-items:center;gap:12px;
+  box-shadow:var(--shadow-md);
+  min-width:240px;
+}
+.ornament-demo .cartouche img{height:42px;width:auto}
+.ornament-demo .cartouche .lbl{
+  font-family:var(--font-display);font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--green-100);font-weight:700;line-height:1.3;
+}
+
+/* ========== COMPONENTS — BUTTONS ========== */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--font-display);font-weight:600;font-size:15px;
+  padding:12px 22px;border-radius:999px;border:1.5px solid transparent;
+  cursor:pointer;transition:transform .15s ease,background .15s ease,color .15s ease,border-color .15s ease;
+  text-decoration:none;
+}
+.btn:hover{transform:translateY(-1px);text-decoration:none}
+.btn-primary{background:var(--green-100);color:#fff}
+.btn-primary:hover{background:var(--green-80)}
+.btn-accent{background:var(--red-100);color:#fff}
+.btn-accent:hover{background:var(--red-80)}
+.btn-outline{background:transparent;color:var(--green-100);border-color:var(--green-100)}
+.btn-outline:hover{background:var(--green-100);color:#fff}
+.btn-ghost{background:transparent;color:var(--ink)}
+.btn-ghost:hover{background:var(--bg-soft)}
+.btn-sm{padding:8px 14px;font-size:13px}
+.btn-lg{padding:16px 28px;font-size:16px}
+
+.btn-row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+
+/* ========== COMPONENTS — FORM ========== */
+.field{display:grid;gap:6px}
+.field label{font-family:var(--font-display);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+.field input,.field textarea,.field select{
+  font-family:var(--font-body);font-size:15px;color:var(--ink);
+  padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);
+  outline:none;background:#fff;
+}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--green-100);box-shadow:0 0 0 4px rgba(0,115,68,.12)}
+
+/* ========== BADGES ========== */
+.badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 12px;border-radius:999px;
+  font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.04em;
+  background:var(--green-20);color:var(--green-100);
+}
+.badge.red{background:var(--red-20);color:var(--red-100)}
+.badge.blue{background:var(--blue-20);color:var(--blue-100)}
+.badge.beige{background:var(--beige-100);color:#7a4f1e}
+.badge.lime{background:var(--lime-20);color:#5b6a14}
+.badge.dark{background:#000;color:#fff}
+
+/* ========== ICON GALLERY ========== */
+.iconbox{
+  background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:18px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;
+}
+.iconbox svg{width:30px;height:30px;color:var(--green-100)}
+.iconbox span{font-family:var(--font-display);font-size:12px;color:var(--ink-soft);letter-spacing:.04em}
+
+/* ========== ARCHITECTURE DE MARQUE ========== */
+.arch{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.arch .ent{
+  background:linear-gradient(180deg,#fff,var(--bg-soft));
+  border:1px solid var(--border);border-radius:var(--radius-md);
+  padding:18px;display:flex;flex-direction:column;gap:8px;min-height:140px;
+}
+.arch .ent .num{font-family:var(--font-display);font-size:11px;letter-spacing:.2em;color:var(--green-100);font-weight:700}
+.arch .ent .name{font-family:var(--font-display);font-weight:700;font-size:15px;line-height:1.2}
+.arch .ent .type{font-size:12px;color:var(--muted);margin-top:auto}
+
+/* ========== APPLICATION MOCKUPS ========== */
+.mockup{
+  border-radius:var(--radius-md);
+  overflow:hidden;
+  border:1px solid var(--border);
+  background:#f3f3f1;
+}
+.mockup .frame{aspect-ratio:3/4;position:relative;background:var(--green-100);overflow:hidden}
+.mockup .frame.social{aspect-ratio:1/1}
+.mockup .frame.banner{aspect-ratio:21/9}
+.mockup .frame .wave{position:absolute;inset:0;background: radial-gradient(150% 110% at -10% 130%, var(--green-60) 0 40%, transparent 40%);}
+.mockup .frame .photo{position:absolute;inset:0;background:linear-gradient(135deg,#cfd5cf,#9bb09b);mix-blend-mode:multiply;opacity:.7}
+.mockup .frame .head{position:absolute;top:24px;left:24px;right:24px;color:#fff;font-family:var(--font-display);font-weight:700;font-size:clamp(18px,2.6vw,30px);line-height:1;text-transform:uppercase}
+.mockup .frame .head small{display:block;font-size:11px;letter-spacing:.16em;color:rgba(255,255,255,.75);margin-bottom:8px;font-weight:500}
+.mockup .frame .cartouche{
+  position:absolute;right:14px;bottom:14px;background:#fff;
+  border-radius:22px 22px 22px 60px;padding:8px 14px 8px 10px;display:flex;align-items:center;gap:8px;
+}
+.mockup .frame .cartouche img{height:26px;width:auto}
+.mockup .frame .cartouche span{font-family:var(--font-display);font-size:7px;letter-spacing:.18em;text-transform:uppercase;color:var(--green-100);font-weight:700;line-height:1.2}
+.mockup .label{padding:10px 14px;font-family:var(--font-display);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+/* ========== CARTE D'EXEMPLE — actu / publication ========== */
+.pub-card{
+  border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden;background:#fff;
+  display:flex;flex-direction:column;
+}
+.pub-card .thumb{aspect-ratio:16/10;background:linear-gradient(135deg,var(--green-100),var(--green-60));position:relative}
+.pub-card .thumb::after{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(160% 110% at -10% 130%, rgba(255,255,255,.18) 0 40%, transparent 40%);
+}
+.pub-card .body{padding:22px}
+.pub-card h4{margin:0 0 8px;font-family:var(--font-display);font-size:19px;line-height:1.2}
+.pub-card p{margin:0;color:var(--ink-soft);font-size:14px}
+.pub-card .tag{display:inline-block;margin-bottom:10px}
+
+/* ========== FOOTER ========== */
+footer{background:var(--ink);color:rgba(255,255,255,.78);padding:64px 0 48px;margin-top:0}
+footer .foot{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px}
+footer h5{font-family:var(--font-display);text-transform:uppercase;font-size:12px;letter-spacing:.18em;color:#fff;margin:0 0 14px}
+footer a{color:rgba(255,255,255,.78)}
+footer a:hover{color:#fff}
+footer ul{list-style:none;padding:0;margin:0;display:grid;gap:8px;font-size:14px}
+footer .legal{margin-top:48px;border-top:1px solid rgba(255,255,255,.12);padding-top:24px;display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.55);flex-wrap:wrap;gap:12px}
+@media (max-width:900px){footer .foot{grid-template-columns:1fr 1fr}}
+
+/* ========== TOC SIDE NUMBER ========== */
+.section-num{
+  font-family:var(--font-display);font-weight:700;font-size:14px;letter-spacing:.18em;
+  color:var(--green-100);
+}
+
+/* ========== TABLE ========== */
+table.spec{width:100%;border-collapse:collapse;font-size:14px}
+table.spec th,table.spec td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--border)}
+table.spec th{font-family:var(--font-display);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+table.spec code{background:var(--bg-soft);border:1px solid var(--border);padding:2px 6px;border-radius:4px;font-size:12px}
+
+/* ========== ROW HELPERS ========== */
+.stack-2 > * + *{margin-top:8px}
+.stack-4 > * + *{margin-top:16px}
+.stack-6 > * + *{margin-top:24px}
+</style>
+</head>
+<body>
+
+<!-- ============== TOP NAV ============== -->
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="#hero" class="brand">
+      <span class="brand-mark">O</span>
+      <span>ONDE — Design System</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#identite">Identité</a>
+      <a href="#logo">Logo</a>
+      <a href="#typographie">Typographie</a>
+      <a href="#couleurs">Couleurs</a>
+      <a href="#ornement">Ornement</a>
+      <a href="#composants">Composants</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#applications">Applications</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============== HERO ============== -->
+<section id="hero" class="hero">
+  <div class="container hero-inner">
+    <div>
+      <span class="hero-eyebrow">Guide de l'identité visuelle • 2026</span>
+      <h1>Charte<br/><span class="accent">Graphique</span></h1>
+      <p class="hero-sub">
+        Système de design de l'Observatoire National des Droits de l'Enfant.
+        Une identité accessible, ludique et accueillante au service des droits
+        de l'enfant au Maroc.
+      </p>
+      <div class="hero-meta">
+        <span>Confiance</span>
+        <span>Proximité</span>
+        <span>Dynamisme</span>
+        <span>Inclusion</span>
+      </div>
+    </div>
+    <div class="hero-card">
+      <img src="LOGO-ONDE.png" alt="Logo ONDE" />
+    </div>
+  </div>
+</section>
+
+<!-- ============== 01 IDENTITÉ ============== -->
+<section id="identite" class="block">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">01 — Identité</span>
+        <h2>L'esprit de la marque</h2>
+        <p class="lede">
+          La charte graphique a été conçue pour garantir une identité visuelle cohérente et reconnaissable
+          sur l'ensemble des supports (print, digital, goodies). L'univers reflète les valeurs fondamentales de l'ONDE,
+          avec une palette de couleurs et une typographie soigneusement choisies pour transmettre confiance,
+          proximité et dynamisme.
+        </p>
+      </div>
+      <span class="section-num">/ 01</span>
+    </div>
+
+    <div class="grid grid-4 values">
+      <div class="card">
+        <div class="num">01 — VALEUR</div>
+        <h3>Accessible</h3>
+        <p>Un langage visuel inclusif, lisible et compréhensible quelle que soit la langue ou la culture.</p>
+      </div>
+      <div class="card">
+        <div class="num">02 — VALEUR</div>
+        <h3>Ludique</h3>
+        <p>Le personnage du logo, vivant et dynamique, ancre la marque dans la joie et l'imaginaire de l'enfance.</p>
+      </div>
+      <div class="card">
+        <div class="num">03 — VALEUR</div>
+        <h3>Accueillante</h3>
+        <p>Des formes douces et arrondies, une palette chaleureuse, une voix proche et bienveillante.</p>
+      </div>
+      <div class="card">
+        <div class="num">04 — VALEUR</div>
+        <h3>Institutionnelle</h3>
+        <p>Une marque cohérente, crédible et facilement reconnaissable, ancrée dans le drapeau marocain.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== 02 LOGO ============== -->
+<section id="logo" class="block">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">02 — Logo</span>
+        <h2>Le logotype et ses usages</h2>
+        <p class="lede">
+          Le logo intègre un personnage ludique et dynamique servant de point d'ancrage visuel. Le nom de l'ONDE
+          est présenté en arabe, français et amazigh — favorisant l'inclusion. Les couleurs reprennent celles du drapeau du Royaume.
+        </p>
+      </div>
+      <span class="section-num">/ 02</span>
+    </div>
+
+    <div class="grid grid-2">
+      <div>
+        <div class="logo-stage">
+          <img src="LOGO-ONDE.png" alt="Version horizontale ONDE" />
+        </div>
+        <p class="t-small" style="margin-top:12px">
+          <strong style="font-family:var(--font-display)">Version horizontale</strong> — version de référence,
+          à utiliser en priorité sur l'ensemble des supports émanant de l'ONDE.
+        </p>
+      </div>
+      <div>
+        <div class="logo-stage dark">
+          <img src="LOGO-ONDE.png" alt="Version sur fond foncé ONDE" style="filter:brightness(0) invert(1) opacity(.95)"/>
+        </div>
+        <p class="t-small" style="margin-top:12px">
+          <strong style="font-family:var(--font-display)">Sur fond institutionnel</strong> — la version monochrome
+          est utilisée sur les fonds verts ou photographiques sombres.
+        </p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:48px;font-family:var(--font-display);font-size:20px">Les interdits</h3>
+    <div class="logo-rules">
+      <div class="logo-rule"><span class="x">✕</span><span>Ne pas changer les couleurs du logo.</span></div>
+      <div class="logo-rule"><span class="x">✕</span><span>Ne pas changer les typographies.</span></div>
+      <div class="logo-rule"><span class="x">✕</span><span>Ne pas déformer ni étirer le logo.</span></div>
+      <div class="logo-rule"><span class="x">✕</span><span>Ne pas perdre la lisibilité du logo.</span></div>
+      <div class="logo-rule"><span class="x">✕</span><span>Ne pas supprimer un élément du logo.</span></div>
+      <div class="logo-rule"><span class="x">✕</span><span>Ne pas baisser l'opacité du logo.</span></div>
+    </div>
+
+    <p class="t-small" style="margin-top:24px;max-width:80ch">
+      <strong style="font-family:var(--font-display)">Zone de protection</strong> — La moitié de la largeur du
+      personnage du logo sert de référence pour déterminer l'espace minimum à respecter autour. Aucun élément
+      graphique, texte ou image ne doit pénétrer dans cette zone.
+    </p>
+  </div>
+</section>
+
+<!-- ============== 03 TYPOGRAPHIE ============== -->
+<section id="typographie" class="block" style="background:var(--bg-soft)">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">03 — Typographie</span>
+        <h2>La famille Co</h2>
+        <p class="lede">
+          Co est une police sans-serif humaniste polyvalente (Dalton Maag), alliant structure géométrique subtile
+          et terminaisons arrondies. Variantes <em>Text</em> (texte courant) et <em>Headline</em> (titres expressifs).
+          Pour l'arabe, Co a été conçue pour respecter les spécificités typographiques. Sur le web, fallback :
+          <code>Inter</code> (latin), <code>Cairo</code> (arabe), <code>Space Grotesk</code> (display).
+        </p>
+      </div>
+      <span class="section-num">/ 03</span>
+    </div>
+
+    <div class="card" style="padding:8px 32px">
+      <div class="type-row">
+        <div class="type-meta">Display • 64 / 0.95</div>
+        <div class="type-sample t-display">L'enfant face aux enjeux contemporains</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">H1 • 48 / 1.05</div>
+        <div class="type-sample t-h1">Observatoire National des Droits de l'Enfant</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">H2 • 36 / 1.1</div>
+        <div class="type-sample t-h2">Parlement de l'enfant</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">H3 • 24 / 1.2</div>
+        <div class="type-sample t-h3">Centre d'écoute 2511</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">Body • 18 / 1.55</div>
+        <div class="type-sample t-body">L'ONDE œuvre pour la promotion et la protection des droits de l'enfant au Maroc, sous la Présidence Effective de Son Altesse Royale la Princesse Lalla Meryem.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">Small • 14 / 1.5</div>
+        <div class="type-sample t-small">47, rue Mellouza — Rabat — Maroc · Tél. +212 5 37 75 50 99 · www.onde.ma</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">Arabic • Cairo</div>
+        <div class="type-sample t-arabic">المرصد الوطني لحقوق الطفل</div>
+      </div>
+    </div>
+
+    <div class="grid grid-3" style="margin-top:32px">
+      <div class="card">
+        <div class="eyebrow">Light · 300</div>
+        <div style="font-family:var(--font-display);font-weight:300;font-size:42px;line-height:1">AaBbCc 0123</div>
+      </div>
+      <div class="card">
+        <div class="eyebrow">Regular · 400</div>
+        <div style="font-family:var(--font-display);font-weight:400;font-size:42px;line-height:1">AaBbCc 0123</div>
+      </div>
+      <div class="card">
+        <div class="eyebrow">Bold · 700</div>
+        <div style="font-family:var(--font-display);font-weight:700;font-size:42px;line-height:1">AaBbCc 0123</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== 04 COULEURS ============== -->
+<section id="couleurs" class="block">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">04 — Couleurs · Palette principale</span>
+        <h2>Drapeau marocain</h2>
+        <p class="lede">
+          Issues du logo, les couleurs principales reprennent celles du drapeau marocain — affirmant l'ancrage
+          territorial et institutionnel de la marque. Vert, rouge et noir constituent la palette fondamentale.
+        </p>
+      </div>
+      <span class="section-num">/ 04</span>
+    </div>
+
+    <div class="grid grid-3">
+      <!-- VERT -->
+      <div>
+        <div class="swatch">
+          <div class="chip" style="background:#007344">PRIMARY · GREEN</div>
+          <div class="meta">
+            <div class="name">Vert ONDE</div>
+            <div class="hex">#007344 · RGB 0 115 68</div>
+            <div class="cmyk">CMJN 100 / 30 / 90 / 10</div>
+          </div>
+        </div>
+        <div class="tints">
+          <span style="background:#007344">100</span>
+          <span style="background:#338F69">80</span>
+          <span style="background:#66AB8E">60</span>
+          <span style="background:#99C7B3;color:#0d1411">40</span>
+          <span style="background:#CCE3D9;color:#0d1411">20</span>
+        </div>
+      </div>
+
+      <!-- ROUGE -->
+      <div>
+        <div class="swatch">
+          <div class="chip" style="background:#e30613">ACCENT · RED</div>
+          <div class="meta">
+            <div class="name">Rouge ONDE</div>
+            <div class="hex">#e30613 · RGB 227 6 19</div>
+            <div class="cmyk">CMJN 0 / 100 / 100 / 0</div>
+          </div>
+        </div>
+        <div class="tints">
+          <span style="background:#e30613">100</span>
+          <span style="background:#E9384A">80</span>
+          <span style="background:#EE6A77">60</span>
+          <span style="background:#F49BA4;color:#0d1411">40</span>
+          <span style="background:#F9CDD1;color:#0d1411">20</span>
+        </div>
+      </div>
+
+      <!-- NOIR -->
+      <div>
+        <div class="swatch">
+          <div class="chip" style="background:#000000">NEUTRAL · BLACK</div>
+          <div class="meta">
+            <div class="name">Noir</div>
+            <div class="hex">#000000 · RGB 0 0 0</div>
+            <div class="cmyk">CMJN 0 / 0 / 0 / 100</div>
+          </div>
+        </div>
+        <div class="tints">
+          <span style="background:#000000">100</span>
+          <span style="background:#333333">80</span>
+          <span style="background:#666666">60</span>
+          <span style="background:#999999;color:#0d1411">40</span>
+          <span style="background:#cccccc;color:#0d1411">20</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head" style="margin-top:72px">
+      <div>
+        <span class="eyebrow">04 — Couleurs · Palette complémentaire</span>
+        <h2>Soutenir et équilibrer</h2>
+        <p class="lede">
+          Trois teintes plus douces et apaisantes — bleu roi, beige et vert clair — viennent enrichir la palette
+          principale. Recommandées en priorité pour les réseaux sociaux et les marques cautionnées.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-3">
+      <!-- BLEU -->
+      <div>
+        <div class="swatch">
+          <div class="chip" style="background:#2e5a78">SECONDARY · BLUE</div>
+          <div class="meta">
+            <div class="name">Bleu Roi</div>
+            <div class="hex">#2e5a78 · RGB 46 90 120</div>
+            <div class="cmyk">CMJN 85 / 55 / 33 / 20</div>
+          </div>
+        </div>
+        <div class="tints">
+          <span style="background:#2e5a78">100</span>
+          <span style="background:#587B93">80</span>
+          <span style="background:#829CAE">60</span>
+          <span style="background:#ABBDC9;color:#0d1411">40</span>
+          <span style="background:#D5DEE4;color:#0d1411">20</span>
+        </div>
+      </div>
+
+      <!-- BEIGE -->
+      <div>
+        <div class="swatch">
+          <div class="chip" style="background:#fcd4a6;color:#7a4f1e">SECONDARY · BEIGE</div>
+          <div class="meta">
+            <div class="name">Beige</div>
+            <div class="hex">#fcd4a6 · RGB 252 212 166</div>
+            <div class="cmyk">CMJN 0 / 21 / 39 / 0</div>
+          </div>
+        </div>
+        <div class="tints">
+          <span style="background:#fcd4a6;color:#7a4f1e">100</span>
+          <span style="background:#FDDDB8;color:#7a4f1e">80</span>
+          <span style="background:#FDE5C9;color:#7a4f1e">60</span>
+          <span style="background:#FEEEDB;color:#7a4f1e">40</span>
+          <span style="background:#FEF6ED;color:#7a4f1e">20</span>
+        </div>
+      </div>
+
+      <!-- VERT CLAIR -->
+      <div>
+        <div class="swatch">
+          <div class="chip" style="background:#97b022">SECONDARY · LIME</div>
+          <div class="meta">
+            <div class="name">Vert clair</div>
+            <div class="hex">#97b022 · RGB 151 176 34</div>
+            <div class="cmyk">CMJN 49 / 13 / 100 / 1</div>
+          </div>
+        </div>
+        <div class="tints">
+          <span style="background:#97b022">100</span>
+          <span style="background:#ACC04E">80</span>
+          <span style="background:#C1D07B;color:#0d1411">60</span>
+          <span style="background:#D5DFA7;color:#0d1411">40</span>
+          <span style="background:#EAEFD3;color:#0d1411">20</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== 05 ORNEMENT ============== -->
+<section id="ornement" class="block" style="background:var(--bg-soft)">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">05 — Ornement graphique</span>
+        <h2>La vague ascendante</h2>
+        <p class="lede">
+          Issu des bras du personnage du logo, l'ornement crée un lien graphique cohérent entre tous les supports.
+          Sa forme ascendante symbolise dynamisme et positivité. La zone verte accueille les éléments de communication
+          (texte, icônes), la zone claire est dédiée à la photographie.
+        </p>
+      </div>
+      <span class="section-num">/ 05</span>
+    </div>
+
+    <div class="ornament-demo">
+      <div class="wave"></div>
+      <div class="content">
+        <h3>L'enfant face aux enjeux contemporains</h3>
+        <p>Sous la Présidence Effective de Son Altesse Royale la Princesse Lalla Meryem.</p>
+      </div>
+      <div class="cartouche">
+        <img src="LOGO-ONDE.png" alt="logo onde"/>
+        <div class="lbl">Observatoire National<br/>des Droits de l'Enfant</div>
+      </div>
+    </div>
+
+    <div class="grid grid-3" style="margin-top:32px">
+      <div class="card">
+        <h3>Zone communication</h3>
+        <p>Aplat vert plein, accueille titres, sous-titres et icônes en blanc. Le texte respecte la zone d'exclusion.</p>
+      </div>
+      <div class="card">
+        <h3>Zone photographie</h3>
+        <p>Vert clair (60–80 % du vert principal) ou photographie. Sert de respiration et de support visuel.</p>
+      </div>
+      <div class="card">
+        <h3>Cartouche logo</h3>
+        <p>Aplat blanc à coins arrondis, hébergeant le logo. Toujours positionné à droite (haut ou bas du visuel).</p>
+      </div>
+    </div>
+
+    <table class="spec" style="margin-top:32px;background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden">
+      <thead><tr><th>Format</th><th>Largeur du cartouche</th><th>Exemple d'usage</th></tr></thead>
+      <tbody>
+        <tr><td>Portrait</td><td><code>1/2</code> de la largeur</td><td>Affiche A3 / A2</td></tr>
+        <tr><td>Carré</td><td><code>1/3</code> de la largeur</td><td>Post réseaux sociaux</td></tr>
+        <tr><td>Horizontal</td><td><code>1/3</code> de la largeur</td><td>Habillage de stand</td></tr>
+        <tr><td>Hauteur</td><td><code>2/3</code> de la largeur</td><td>Roll up</td></tr>
+        <tr><td>Panoramique</td><td><code>1/4</code> de la largeur</td><td>Bannière web</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============== 06 COMPOSANTS ============== -->
+<section id="composants" class="block">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">06 — Composants UI</span>
+        <h2>Boutons, formulaires & badges</h2>
+        <p class="lede">
+          Composants prêts à l'emploi pour le digital, alignés sur les codes de la charte. Coins arrondis,
+          contrastes suffisants pour l'accessibilité, hiérarchie claire entre action principale, action accent et action secondaire.
+        </p>
+      </div>
+      <span class="section-num">/ 06</span>
+    </div>
+
+    <!-- BOUTONS -->
+    <h3 style="font-family:var(--font-display);margin:0 0 16px">Boutons</h3>
+    <div class="card" style="padding:32px">
+      <div class="btn-row" style="margin-bottom:18px">
+        <button class="btn btn-primary">Découvrir l'ONDE</button>
+        <button class="btn btn-accent">Signaler · 2511</button>
+        <button class="btn btn-outline">Nos publications</button>
+        <button class="btn btn-ghost">En savoir plus →</button>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary btn-sm">Petit</button>
+        <button class="btn btn-primary">Standard</button>
+        <button class="btn btn-primary btn-lg">Grand</button>
+      </div>
+    </div>
+
+    <!-- BADGES -->
+    <h3 style="font-family:var(--font-display);margin:48px 0 16px">Étiquettes & badges</h3>
+    <div class="card" style="padding:28px">
+      <div class="btn-row">
+        <span class="badge">Parlement de l'enfant</span>
+        <span class="badge red">Urgent · 2511</span>
+        <span class="badge blue">DNPTE</span>
+        <span class="badge beige">Carnet de santé</span>
+        <span class="badge lime">Hackathon</span>
+        <span class="badge dark">Publication</span>
+      </div>
+    </div>
+
+    <!-- FORMS -->
+    <h3 style="font-family:var(--font-display);margin:48px 0 16px">Champs de formulaire</h3>
+    <div class="card" style="padding:32px">
+      <div class="grid grid-2">
+        <div class="field">
+          <label for="nom">Nom complet</label>
+          <input id="nom" type="text" placeholder="Ex. Ghizlane Benjelloun" />
+        </div>
+        <div class="field">
+          <label for="email">Adresse email</label>
+          <input id="email" type="email" placeholder="vous@onde.ma" />
+        </div>
+        <div class="field" style="grid-column:1 / -1">
+          <label for="msg">Votre message</label>
+          <textarea id="msg" rows="3" placeholder="Décrivez votre demande…"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- ICONS -->
+    <h3 style="font-family:var(--font-display);margin:48px 0 16px">Iconographie</h3>
+    <p class="t-small" style="max-width:80ch;margin-bottom:16px">
+      Pictogrammes au trait fin et arrondi, à l'image du logo : style humaniste, terminaisons douces,
+      contour <strong>1.6 px</strong>. Toujours en vert <code>#007344</code> ou en blanc sur fond foncé.
+    </p>
+    <div class="grid grid-5">
+      <div class="iconbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4z"/></svg><span>Protection</span></div>
+      <div class="iconbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 21c0-3.5 3-6 7-6s7 2.5 7 6"/></svg><span>Enfant</span></div>
+      <div class="iconbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12c0 4.5-4 8-9 8-1.5 0-3-.3-4.3-.9L3 21l1.4-4.4A8.4 8.4 0 0 1 3 12c0-4.5 4-8 9-8s9 3.5 9 8z"/></svg><span>Écoute</span></div>
+      <div class="iconbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18M3 12h18M3 17h12"/></svg><span>Publications</span></div>
+      <div class="iconbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-7-11a7 7 0 0 1 14 0c0 6.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg><span>Rabat</span></div>
+      <div class="iconbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Agenda</span></div>
+      <div class="iconbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16v10H8l-4 4V6z"/></svg><span>Parole</span></div>
+      <div class="iconbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 7v6c0 5 8 8 8 8s8-3 8-8V7l-8-4z"/><path d="m9 12 2 2 4-4"/></svg><span>Droits</span></div>
+      <div class="iconbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="3.2"/><circle cx="17" cy="11" r="2.6"/><path d="M3 19c0-3 3-5 6-5s6 2 6 5"/><path d="M14 19c.6-2 2-3 3.5-3s2.5 1 2.5 3"/></svg><span>Parlement</span></div>
+      <div class="iconbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12c2-3 5-5 8-5s6 2 8 5c-2 3-5 5-8 5s-6-2-8-5z"/><circle cx="12" cy="12" r="2.2"/></svg><span>Observation</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== 07 ARCHITECTURE DE MARQUE ============== -->
+<section id="architecture" class="block" style="background:var(--bg-soft)">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">07 — Architecture de marque</span>
+        <h2>Une marque mère, cinq entités</h2>
+        <p class="lede">
+          Modèle hybride : <strong>marques cautionnées</strong> (l'ONDE soutient et légitime chaque marque fille,
+          tout en lui laissant une autonomie d'identité) et <strong>free branding</strong> (réponses ciblées
+          aux audiences spécifiques).
+        </p>
+      </div>
+      <span class="section-num">/ 07</span>
+    </div>
+
+    <div class="arch">
+      <div class="ent">
+        <div class="num">01 — CAUTIONNÉE</div>
+        <div class="name">Parlement de l'enfant</div>
+        <div class="type">Participation citoyenne</div>
+      </div>
+      <div class="ent">
+        <div class="num">02 — CAUTIONNÉE</div>
+        <div class="name">DNPTE — Dispositif National Psycho-Trauma de l'Enfant</div>
+        <div class="type">Santé mentale</div>
+      </div>
+      <div class="ent">
+        <div class="num">03 — CAUTIONNÉE</div>
+        <div class="name">2511</div>
+        <div class="type">Centre d'écoute</div>
+      </div>
+      <div class="ent">
+        <div class="num">04 — CAUTIONNÉE</div>
+        <div class="name">African Forum of the Children's Parliament</div>
+        <div class="type">Coopération africaine</div>
+      </div>
+      <div class="ent" style="background:linear-gradient(180deg,#fff,#fef6ed);border-color:var(--beige-100)">
+        <div class="num" style="color:#7a4f1e">05 — FREE BRANDING</div>
+        <div class="name">Carnet de santé</div>
+        <div class="type">Outil grand public</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== 08 APPLICATIONS ============== -->
+<section id="applications" class="block">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">08 — Applications</span>
+        <h2>L'identité en situation</h2>
+        <p class="lede">
+          Mises en application sur les supports les plus courants. Le couple <em>aplat vert + cartouche blanc</em>
+          assure une reconnaissance immédiate de l'ONDE, quel que soit le format.
+        </p>
+      </div>
+      <span class="section-num">/ 08</span>
+    </div>
+
+    <div class="grid grid-3">
+      <!-- Affiche -->
+      <div class="mockup">
+        <div class="frame">
+          <div class="wave"></div>
+          <div class="head">
+            <small>Sous la Présidence Effective de SAR la Princesse Lalla Meryem</small>
+            L'enfant face aux enjeux contemporains
+          </div>
+          <div class="cartouche"><img src="LOGO-ONDE.png" alt=""/><span>Observatoire National<br/>des Droits de l'Enfant</span></div>
+        </div>
+        <div class="label">Affiche · Format portrait · 1/2</div>
+      </div>
+
+      <!-- Réseaux sociaux -->
+      <div class="mockup">
+        <div class="frame social" style="background:#2e5a78">
+          <div class="wave" style="background:radial-gradient(150% 110% at -10% 130%, #587B93 0 40%, transparent 40%)"></div>
+          <div class="head" style="font-size:22px"><small>1ère édition · Forum africain</small>Participation des enfants au développement de l'Afrique</div>
+          <div class="cartouche"><img src="LOGO-ONDE.png" alt=""/><span>African Forum<br/>Children's Parliament</span></div>
+        </div>
+        <div class="label">Réseaux sociaux · Carré · 1/3 · Palette complémentaire</div>
+      </div>
+
+      <!-- Bannière web -->
+      <div class="mockup">
+        <div class="frame banner">
+          <div class="wave"></div>
+          <div class="head" style="font-size:24px"><small>Quelle feuille de route pour 2030 ?</small>L'ONDE en bref</div>
+          <div class="cartouche"><img src="LOGO-ONDE.png" alt=""/><span>Observatoire National<br/>des Droits de l'Enfant</span></div>
+        </div>
+        <div class="label">Bannière web · Panoramique · 1/4</div>
+      </div>
+    </div>
+
+    <!-- Cards de publication -->
+    <h3 style="font-family:var(--font-display);margin:64px 0 20px">Cartes de contenu (digital)</h3>
+    <div class="grid grid-3">
+      <article class="pub-card">
+        <div class="thumb"></div>
+        <div class="body">
+          <span class="badge tag">Publication</span>
+          <h4>Rapport annuel 2025 — Promouvoir et protéger</h4>
+          <p>Bilan des activités de l'ONDE et des cinq entités cautionnées pour l'année écoulée.</p>
+        </div>
+      </article>
+      <article class="pub-card">
+        <div class="thumb" style="background:linear-gradient(135deg,#2e5a78,#587B93)"></div>
+        <div class="body">
+          <span class="badge blue tag">DNPTE</span>
+          <h4>Lancement officiel du Dispositif Psycho-Trauma</h4>
+          <p>L'ONDE déploie un nouveau dispositif national de soutien psychologique aux enfants.</p>
+        </div>
+      </article>
+      <article class="pub-card">
+        <div class="thumb" style="background:linear-gradient(135deg,#e30613,#EE6A77)"></div>
+        <div class="body">
+          <span class="badge red tag">2511</span>
+          <h4>Centre d'écoute 2511 — Une oreille à l'écoute</h4>
+          <p>Numéro vert national destiné à recueillir la parole et les signalements des enfants.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============== INDEX DES PAGES ============== -->
+<section id="pages" class="block" style="background:var(--bg-soft)">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">09 — Index du site onde.ma</span>
+        <h2>Architecture des pages</h2>
+        <p class="lede">
+          16 pages publiques recensées. Trois grands ensembles : <strong>l'institution</strong> (qui sommes-nous),
+          <strong>les actions</strong> (ce que nous faisons) et <strong>l'engagement</strong> (comment participer).
+        </p>
+      </div>
+      <span class="section-num">/ 09</span>
+    </div>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <span class="badge">Institution</span>
+        <ul style="list-style:none;padding:0;margin:14px 0 0;display:grid;gap:8px;font-size:14px">
+          <li><a href="https://www.onde.ma/accueil">Accueil</a></li>
+          <li><a href="https://www.onde.ma/onde-en-bref">L'ONDE en bref</a></li>
+          <li><a href="https://www.onde.ma/mission">Mission</a></li>
+          <li><a href="https://www.onde.ma/historique">Historique</a></li>
+          <li><a href="https://www.onde.ma/organigramme">Organigramme</a></li>
+          <li><a href="https://www.onde.ma/premieres-missions">Premières missions</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="badge red">Actions</span>
+        <ul style="list-style:none;padding:0;margin:14px 0 0;display:grid;gap:8px;font-size:14px">
+          <li><a href="https://www.onde.ma/actions">Actions</a></li>
+          <li><a href="https://www.onde.ma/dnpte">DNPTE</a></li>
+          <li><a href="https://www.onde.ma/lancement-officiel-dnpte">Lancement officiel DNPTE</a></li>
+          <li><a href="https://www.onde.ma/centre-decoute-2511">Centre d'écoute 2511</a></li>
+          <li><a href="https://www.onde.ma/sante-mental">Santé mentale</a></li>
+          <li><a href="https://www.onde.ma/parlement-de-lenfant">Parlement de l'enfant</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="badge blue">Engagement</span>
+        <ul style="list-style:none;padding:0;margin:14px 0 0;display:grid;gap:8px;font-size:14px">
+          <li><a href="https://www.onde.ma/hackaton">Hackathon</a></li>
+          <li><a href="https://www.onde.ma/rencontre-enfant">Rencontre enfant</a></li>
+          <li><a href="https://www.onde.ma/publications">Publications</a></li>
+          <li><a href="https://www.onde.ma/contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== TOKENS / SPEC ============== -->
+<section id="tokens" class="block">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">10 — Tokens</span>
+        <h2>Variables CSS prêtes à l'emploi</h2>
+        <p class="lede">
+          Reportez ces variables dans votre <code>:root</code>. Elles couvrent la palette officielle 2026, les rayons,
+          les ombres et les fontes. Compatibles avec Tailwind, design tokens W3C, ou un CSS custom.
+        </p>
+      </div>
+      <span class="section-num">/ 10</span>
+    </div>
+
+    <table class="spec">
+      <thead><tr><th>Token</th><th>Valeur</th><th>Usage</th></tr></thead>
+      <tbody>
+        <tr><td><code>--green-100</code></td><td><code>#007344</code></td><td>Couleur primaire / fonds hero / CTA</td></tr>
+        <tr><td><code>--red-100</code></td><td><code>#e30613</code></td><td>Accent · alerte · 2511</td></tr>
+        <tr><td><code>--black-100</code></td><td><code>#000000</code></td><td>Texte / encrage</td></tr>
+        <tr><td><code>--blue-100</code></td><td><code>#2e5a78</code></td><td>Marques cautionnées (DNPTE)</td></tr>
+        <tr><td><code>--beige-100</code></td><td><code>#fcd4a6</code></td><td>Free branding / Carnet de santé</td></tr>
+        <tr><td><code>--lime-100</code></td><td><code>#97b022</code></td><td>Réseaux sociaux · variations</td></tr>
+        <tr><td><code>--font-display</code></td><td><code>"Co Headline" → Space Grotesk</code></td><td>Titres</td></tr>
+        <tr><td><code>--font-body</code></td><td><code>"Co Text" → Inter</code></td><td>Texte courant</td></tr>
+        <tr><td><code>--font-arabic</code></td><td><code>"Co Arabic" → Cairo</code></td><td>Arabe</td></tr>
+        <tr><td><code>--radius-md</code></td><td><code>14px</code></td><td>Cards · champs</td></tr>
+        <tr><td><code>--radius-xl</code></td><td><code>36px</code></td><td>Cartouche logo · hero</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============== FOOTER ============== -->
+<footer>
+  <div class="container">
+    <div class="foot">
+      <div>
+        <h5>Observatoire National des Droits de l'Enfant</h5>
+        <p style="margin:0 0 12px;max-width:42ch;font-size:14px">
+          Sous la Présidence Effective de Son Altesse Royale la Princesse Lalla Meryem.
+        </p>
+        <p style="margin:0;font-size:14px;color:rgba(255,255,255,.6)">
+          47, rue Mellouza — Rabat — Maroc<br/>
+          +212 5 37 75 50 99 · <a href="https://onde.ma">www.onde.ma</a>
+        </p>
+      </div>
+      <div>
+        <h5>Identité visuelle</h5>
+        <ul>
+          <li><a href="#logo">Logo & versions</a></li>
+          <li><a href="#typographie">Typographie Co</a></li>
+          <li><a href="#couleurs">Palette 2026</a></li>
+          <li><a href="#ornement">Ornement</a></li>
+          <li><a href="#tokens">Tokens CSS</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Architecture</h5>
+        <ul>
+          <li>Parlement de l'enfant</li>
+          <li>DNPTE</li>
+          <li>2511 · Centre d'écoute</li>
+          <li>African Forum</li>
+          <li>Carnet de santé</li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal">
+      <span>© Observatoire National des Droits de l'Enfant · 2026</span>
+      <span>Design system · Guide de l'identité visuelle 2026</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
