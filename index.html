@@ -95,8 +95,8 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
 .home{
   display:flex;flex-direction:column;
   background:
-    /* Wash vert subtil au top-left (donne le contraste au blob blanc du header) */
-    radial-gradient(80% 55% at 0% 0%, rgba(0,115,68,.20) 0%, rgba(0,115,68,.04) 40%, transparent 60%),
+    /* Wash vert MARQUÉ au top-left pour bien faire ressortir le blob blanc */
+    radial-gradient(75% 50% at 0% 0%, rgba(0,115,68,.32) 0%, rgba(0,115,68,.14) 35%, transparent 60%),
     /* Wash vert clair haut-droite */
     radial-gradient(50% 35% at 100% 0%, var(--green-20) 0%, transparent 70%),
     /* Base : clair en haut → assombrit progressivement vers le bas */
@@ -138,8 +138,13 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
   margin:-4vh 0 0 -8%;
   width:58%;
   height:19vh;min-height:140px;
-  /* Ombre identique aux 6 tuiles, renforcée car la forme cachée par clip-path montre moins d'arêtes */
-  filter:drop-shadow(0 16px 32px rgba(0,115,68,.18)) drop-shadow(0 4px 10px rgba(0,0,0,.08));
+  /* Multi-drop-shadow pour effet d'ombre TOUT AUTOUR du blob (outline + 4 directions) */
+  filter:
+    drop-shadow(0 0 1.5px rgba(0,115,68,.22))
+    drop-shadow(0 -3px 10px rgba(0,115,68,.10))
+    drop-shadow(8px 0 16px rgba(0,115,68,.10))
+    drop-shadow(0 16px 32px rgba(0,115,68,.20))
+    drop-shadow(0 4px 10px rgba(0,0,0,.06));
   align-self:flex-start;
 }
 .brand-wave img{
