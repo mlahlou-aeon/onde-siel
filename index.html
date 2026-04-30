@@ -349,13 +349,8 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
 }
 .control-btn:disabled{
   cursor:default;
-  background:rgba(255,255,255,.02);
-  backdrop-filter:blur(1.5px);-webkit-backdrop-filter:blur(1.5px);
-  border-color:rgba(255,255,255,.35);
-  border-width:1.5px;
-  color:rgba(255,255,255,.45);
-  font-weight:600;
-  text-shadow:none;
+  /* Identique à l'état actif, juste fade global */
+  opacity:.45;
 }
 .control-btn svg{width:20px;height:20px;stroke-width:2.6}
 .control-btn:disabled svg{stroke-width:2.2}
