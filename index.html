@@ -95,27 +95,28 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
 .home{
   display:flex;flex-direction:column;
   background:
-    /* Wash vert MARQUÉ au top-left pour bien faire ressortir le blob blanc */
-    radial-gradient(75% 50% at 0% 0%, rgba(0,115,68,.32) 0%, rgba(0,115,68,.14) 35%, transparent 60%),
-    /* Wash vert clair haut-droite */
-    radial-gradient(50% 35% at 100% 0%, var(--green-20) 0%, transparent 70%),
-    /* Base : clair en haut → assombrit progressivement vers le bas */
+    /* Wash beige MARQUÉ au top-left pour faire ressortir le blob blanc */
+    radial-gradient(75% 50% at 0% 0%, rgba(252,212,166,.95) 0%, rgba(252,212,166,.40) 35%, transparent 60%),
+    /* Wash beige clair haut-droite */
+    radial-gradient(50% 35% at 100% 0%, var(--beige-40) 0%, transparent 70%),
+    /* Base : mêmes niveaux de luminosité que la version verte mais en beige
+       (96→94→84→68% lightness, exactement comme le green-20/40 transition) */
     linear-gradient(180deg,
-      #fafdfb 0%,
-      #fafdfb 45%,
-      #eaf3ee 70%,
-      var(--green-20) 88%,
-      var(--green-40) 100%
+      #fefaf3 0%,
+      #fefaf3 45%,
+      #fef2e1 70%,
+      #f6dbb5 88%,
+      #d2a472 100%
     );
   overflow-y:auto;
   -webkit-overflow-scrolling:touch;
-  padding-bottom:3vh;
+  padding-bottom:1.5vh;
 }
 .home::-webkit-scrollbar{width:0;background:transparent}
 
 .home-header{
   position:relative;
-  padding:4vh 6% 1.2vh;
+  padding:3vh 6% .6vh;
   display:flex;flex-direction:column;gap:.4vh;
   z-index:2;
   flex:0 0 auto;
@@ -138,12 +139,12 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
   margin:-4vh 0 0 -8%;
   width:58%;
   height:19vh;min-height:140px;
-  /* Multi-drop-shadow pour effet d'ombre TOUT AUTOUR du blob (outline + 4 directions) */
+  /* Multi-drop-shadow pour effet d'ombre TOUT AUTOUR du blob — teinte brune chaude (campagne beige) */
   filter:
-    drop-shadow(0 0 1.5px rgba(0,115,68,.22))
-    drop-shadow(0 -3px 10px rgba(0,115,68,.10))
-    drop-shadow(8px 0 16px rgba(0,115,68,.10))
-    drop-shadow(0 16px 32px rgba(0,115,68,.20))
+    drop-shadow(0 0 1.5px rgba(122,79,30,.22))
+    drop-shadow(0 -3px 10px rgba(122,79,30,.10))
+    drop-shadow(8px 0 16px rgba(122,79,30,.10))
+    drop-shadow(0 16px 32px rgba(122,79,30,.22))
     drop-shadow(0 4px 10px rgba(0,0,0,.06));
   align-self:flex-start;
 }
@@ -159,23 +160,23 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
   flex:0 0 auto;
   font-family:var(--font-display);font-weight:700;
   font-size:clamp(11px, 1.4vh, 14px);letter-spacing:.16em;text-transform:uppercase;
-  color:var(--green-100);line-height:1.3;text-align:right;
+  color:#7a4f1e;line-height:1.3;text-align:right;
   white-space:nowrap;
   align-self:flex-start;
   margin-top:2vh;
 }
 
 .tagline{
-  margin-top:-1vh;
+  margin-top:-1.2vh;
   font-family:var(--font-display);font-weight:700;
-  color:var(--green-100);
-  font-size:clamp(28px, 5vh, 54px);
+  color:#7a4f1e;
+  font-size:clamp(20px, 3.4vh, 36px);
   line-height:1.02;letter-spacing:-.015em;
 }
 .tagline em{font-style:normal;color:var(--ink)}
 .subline{
-  margin-top:.4vh;color:var(--ink-soft);
-  font-size:clamp(14px, 1.9vh, 20px);max-width:50ch;line-height:1.35;
+  margin-top:.5vh;color:var(--ink-soft);
+  font-size:clamp(14px, 1.85vh, 19px);max-width:50ch;line-height:1.35;
 }
 
 /* Grille des 6 programmes — 2 colonnes × 3 rangs */
@@ -185,41 +186,45 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
   display:grid;
   grid-template-columns:1fr 1fr;
   grid-template-rows:repeat(3, minmax(0,1fr));
-  gap:1.8vh 4%;
-  padding:1.5vh 5% 2vh;
+  gap:.7vh 4%;
+  padding:.3vh 5% .5vh;
   position:relative;z-index:2;
 }
 
 .tile{
   position:relative;
   background:none;border:none;padding:0;
-  display:grid;place-items:center;
+  display:grid;
+  grid-template-rows:1fr 4.4vh;
+  gap:.7vh;
   cursor:pointer;
   min-width:0;min-height:0;
   text-align:center;
 }
 .tile-card{
   width:100%;
-  aspect-ratio:4 / 3;
-  max-height:100%;
+  height:100%;
   background:#fff;
   border-radius:var(--radius-lg);
-  display:grid;place-items:center;
-  padding:10% 12%;
-  box-shadow:0 12px 28px rgba(0,115,68,.10), 0 2px 6px rgba(13,20,17,.05);
-  border:1px solid rgba(0,115,68,.06);
+  display:flex;align-items:center;justify-content:center;
+  padding:3% 4%;
+  isolation:isolate;
+  box-shadow:0 12px 28px rgba(122,79,30,.12), 0 2px 6px rgba(13,20,17,.05);
+  border:1px solid rgba(122,79,30,.06);
   transition:transform .25s ease, box-shadow .25s ease;
   overflow:hidden;
 }
 .tile:active .tile-card{
   transform:scale(.96);
-  box-shadow:0 4px 12px rgba(0,115,68,.12);
+  box-shadow:0 4px 12px rgba(122,79,30,.14);
 }
 .tile-card img{
-  max-width:88%;max-height:88%;
+  max-width:82%;max-height:68%;
   width:auto;height:auto;
   object-fit:contain;
-  margin:auto;
+  display:block;
+  /* Le multiply fait disparaître le fond blanc des JPEG dans le fond blanc de la carte */
+  mix-blend-mode:multiply;
 }
 
 /* Placeholder pour logos non encore fournis */
@@ -238,35 +243,36 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
 .tile-card .placeholder.red{background:linear-gradient(135deg, #f49ba4, var(--red-100))}
 
 .tile-title{
-  flex:0 0 auto;
   font-family:var(--font-display);font-weight:700;
-  font-size:clamp(11px, 1.5vh, 16px);
+  font-size:clamp(10px, 1.35vh, 14px);
   letter-spacing:.04em;text-transform:uppercase;
   color:var(--ink);
   line-height:1.2;
   padding:0 4px;
-  word-break:keep-all;hyphens:auto;
+  word-break:normal;hyphens:auto;
+  display:flex;align-items:flex-start;justify-content:center;
+  width:100%;
 }
 
 .home-footer{
   position:relative;z-index:2;
   padding:1.4vh 6% 2.4vh;
   display:flex;align-items:center;justify-content:center;
-  gap:12px;color:var(--green-100);
+  gap:12px;color:#7a4f1e;
   font-family:var(--font-display);font-size:clamp(10px, 1.3vh, 14px);
   letter-spacing:.12em;text-transform:uppercase;
   flex:0 0 auto;
   white-space:nowrap;
 }
 .home-footer .pulse{
-  width:10px;height:10px;border-radius:50%;background:var(--green-100);
-  box-shadow:0 0 0 0 rgba(0,115,68,.5);
+  width:10px;height:10px;border-radius:50%;background:#7a4f1e;
+  box-shadow:0 0 0 0 rgba(122,79,30,.5);
   animation:pulse 1.8s ease-out infinite;
 }
 @keyframes pulse{
-  0%{box-shadow:0 0 0 0 rgba(0,115,68,.5)}
-  70%{box-shadow:0 0 0 14px rgba(0,115,68,0)}
-  100%{box-shadow:0 0 0 0 rgba(0,115,68,0)}
+  0%{box-shadow:0 0 0 0 rgba(122,79,30,.5)}
+  70%{box-shadow:0 0 0 14px rgba(122,79,30,0)}
+  100%{box-shadow:0 0 0 0 rgba(122,79,30,0)}
 }
 
 /* ============================================================
@@ -470,50 +476,38 @@ const TEST_VIDEO = "Videos/Video ONDE.mp4";
 const PROGRAMS = [
   {
     id: "parlement",
-    name: "Parlement de l'enfant",
+    name: "Le parlement de l'enfant",
     logo: "Assets/Logo Parlement de l'enfant.png",
-    placeholderLetter: "P",
-    placeholderClass: "blue",
     videos: [TEST_VIDEO, TEST_VIDEO, TEST_VIDEO]
   },
   {
     id: "2511",
-    name: "2511",
+    name: "Le centre d'écoute 2511",
     logo: "Assets/Logo 2511.png",
-    placeholderLetter: "25",
-    placeholderClass: "",
     videos: [TEST_VIDEO, TEST_VIDEO, TEST_VIDEO]
   },
   {
-    id: "dnpte",
-    name: "DNPTE",
-    logo: null,
-    placeholderLetter: "D",
-    placeholderClass: "blue",
+    id: "har",
+    name: "Programme de protection de l'enfance",
+    logo: "Assets/Logo HAR.png",
     videos: [TEST_VIDEO, TEST_VIDEO, TEST_VIDEO]
   },
   {
     id: "tofoula",
-    name: "Tofoula",
+    name: "La plateforme de suivi des indicateurs de l'enfance",
     logo: "Assets/Logo Tofoula.png",
-    placeholderLetter: "T",
-    placeholderClass: "",
     videos: [TEST_VIDEO, TEST_VIDEO, TEST_VIDEO]
   },
   {
-    id: "harcelement",
-    name: "Lutte contre le harcèlement scolaire",
+    id: "dnpte",
+    name: "Le DNPTE",
     logo: null,
-    placeholderLetter: "H",
-    placeholderClass: "red",
     videos: [TEST_VIDEO, TEST_VIDEO, TEST_VIDEO]
   },
   {
-    id: "sante",
-    name: "Santé mère-enfant",
-    logo: null,
-    placeholderLetter: "SM",
-    placeholderClass: "",
+    id: "me",
+    name: "La santé mère-enfant",
+    logo: "Assets/Logo ME.png",
     videos: [TEST_VIDEO, TEST_VIDEO, TEST_VIDEO]
   }
 ];
@@ -535,7 +529,7 @@ PROGRAMS.forEach(p => {
     ? `<img src="${p.logo}" alt="${p.name}" />`
     : ``;
 
-  tile.innerHTML = `<div class="tile-card">${visual}</div>`;
+  tile.innerHTML = `<div class="tile-card">${visual}</div><div class="tile-title">${p.name}</div>`;
 
   tile.addEventListener("click", () => openProgram(p.id));
   grid.appendChild(tile);
