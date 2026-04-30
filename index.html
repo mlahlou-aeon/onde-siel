@@ -306,14 +306,15 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
 .btn-back{
   width:5.4vh;height:5.4vh;min-width:44px;min-height:44px;max-width:54px;max-height:54px;
   border-radius:50%;
-  background:rgba(0,0,0,.35);
+  /* Brun chaud translucide (campagne beige) */
+  background:rgba(122,79,30,.45);
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  border:1.5px solid rgba(255,255,255,.28);
+  border:1.5px solid rgba(255,255,255,.4);
   display:grid;place-items:center;
   transition:transform .15s ease, background .15s ease;
   flex:0 0 auto;
 }
-.btn-back:active{transform:scale(.92);background:rgba(0,0,0,.5)}
+.btn-back:active{transform:scale(.92);background:rgba(122,79,30,.6)}
 .btn-back svg{width:48%;height:48%;color:#fff}
 
 /* Footer overlay (controls) — remontés dans la zone beige du bas de la vidéo */
@@ -330,21 +331,21 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
 .control-btn{
   flex:1;
   padding:2.4vh 16px;
-  /* Même style que .btn-back en haut quand cliquable : noir translucide + blur */
-  background:rgba(0,0,0,.35);
+  /* Même style que .btn-back : brun chaud translucide (palette beige campagne) */
+  background:rgba(122,79,30,.45);
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  border:1.5px solid rgba(255,255,255,.28);
+  border:1.5px solid rgba(255,255,255,.4);
   border-radius:999px;
   color:#fff;font-family:var(--font-display);font-weight:800;
   font-size:clamp(14px, 1.95vh, 18px);
   letter-spacing:.05em;
   display:flex;align-items:center;justify-content:center;gap:10px;
   transition:transform .15s ease, opacity .15s ease, border-color .15s ease, color .15s ease, background .15s ease;
-  text-shadow:0 1px 2px rgba(0,0,0,.35);
+  text-shadow:0 1px 2px rgba(74,48,18,.4);
 }
 .control-btn:not(:disabled):active{
   transform:scale(.97);
-  background:rgba(0,0,0,.5);
+  background:rgba(122,79,30,.6);
 }
 .control-btn:disabled{
   cursor:default;
