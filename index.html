@@ -128,42 +128,38 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
   min-height:18vh;
 }
 
-/* BLOB BLANC ORGANIQUE (signature ONDE — voir affiches event) — sort par le haut + la gauche */
+/* BLOB BLANC — forme officielle ONDE (Assets/Forme ONDE.png) + logo positionné dessus */
 .brand-wave{
   flex:0 0 auto;
   position:relative;
-  background:#fff;
-  /* Demi-ellipse organique, descend du coin haut-gauche */
-  clip-path:ellipse(58% 100% at 30% 0%);
-  /* Sort par le haut et la gauche */
   margin:-4vh 0 0 -8%;
-  width:58%;
-  height:19vh;min-height:140px;
-  /* Multi-drop-shadow pour effet d'ombre TOUT AUTOUR du blob — teinte brune chaude (campagne beige) */
-  filter:
-    drop-shadow(0 0 1.5px rgba(122,79,30,.22))
-    drop-shadow(0 -3px 10px rgba(122,79,30,.10))
-    drop-shadow(8px 0 16px rgba(122,79,30,.10))
-    drop-shadow(0 16px 32px rgba(122,79,30,.22))
-    drop-shadow(0 4px 10px rgba(0,0,0,.06));
+  width:70%;
   align-self:flex-start;
 }
-.brand-wave img{
+.brand-shape{
+  width:100%;height:auto;
+  display:block;
+  /* L'ombre suit naturellement la silhouette du PNG (les zones transparentes n'ombrent pas) */
+  filter:drop-shadow(0 14px 28px rgba(122,79,30,.20)) drop-shadow(0 4px 10px rgba(0,0,0,.06));
+}
+.brand-logo{
   position:absolute;
-  top:38%;left:36%;
+  /* Centré sur la zone large du shape */
+  top:38%;left:48%;
   transform:translate(-50%,-50%);
-  height:9vh;max-height:88px;min-height:58px;width:auto;
+  height:10.5vh;max-height:104px;min-height:64px;width:auto;
   object-fit:contain;
 }
 
 .brand-meta{
-  flex:0 0 auto;
+  /* Position absolue pour échapper au flex layout du brand-row */
+  position:absolute;
+  top:2vh;right:0%;
   font-family:var(--font-display);font-weight:700;
   font-size:clamp(11px, 1.4vh, 14px);letter-spacing:.16em;text-transform:uppercase;
   color:#7a4f1e;line-height:1.3;text-align:right;
   white-space:nowrap;
-  align-self:flex-start;
-  margin-top:2vh;
+  z-index:3;
 }
 
 .tagline{
@@ -249,7 +245,9 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
   color:var(--ink);
   line-height:1.2;
   padding:0 4px;
-  word-break:normal;hyphens:auto;
+  /* Pas d'hyphénation auto — wrap aux limites de mots, retours forcés via \n */
+  word-break:normal;
+  white-space:pre-line;
   display:flex;align-items:flex-start;justify-content:center;
   width:100%;
 }
@@ -402,7 +400,8 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
     <header class="home-header">
       <div class="brand-row">
         <div class="brand-wave">
-          <img src="Assets/Logo ONDE.png" alt="ONDE" />
+          <img class="brand-shape" src="Assets/Forme ONDE.png" alt="" />
+          <img class="brand-logo" src="Assets/Logo ONDE.png" alt="ONDE" />
         </div>
         <div class="brand-meta">Borne d'information</div>
       </div>
@@ -520,7 +519,7 @@ const PROGRAMS = [
   },
   {
     id: "tofoula",
-    name: "La plateforme de suivi des indicateurs de l'enfance",
+    name: "La plateforme de suivi\ndes indicateurs de l'enfance",
     logo: "Assets/Logo Tofoula.png",
     videos: [
       "Videos/4-Tofoula/TOF - Presentation TOFOULA-PC3.mp4"
