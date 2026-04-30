@@ -316,12 +316,11 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
 .btn-back:active{transform:scale(.92);background:rgba(0,0,0,.5)}
 .btn-back svg{width:48%;height:48%;color:#fff}
 
-/* Footer overlay (controls) */
+/* Footer overlay (controls) — remontés dans la zone beige du bas de la vidéo */
 .player-controls{
-  position:absolute;bottom:0;left:0;right:0;
-  padding:8vh 5% 4.5vh;
+  position:absolute;bottom:35%;left:0;right:0;
+  padding:0 5%;
   z-index:5;
-  background:linear-gradient(0deg, rgba(0,0,0,.7) 0%, rgba(0,0,0,0) 100%);
   display:flex;flex-direction:column;align-items:center;gap:2.5vh;
 }
 
@@ -331,20 +330,21 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
 .control-btn{
   flex:1;
   padding:2.4vh 16px;
-  background:rgba(255,255,255,.03);
-  backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);
-  border:2.4px solid #fff;
+  /* Même style que .btn-back en haut quand cliquable : noir translucide + blur */
+  background:rgba(0,0,0,.35);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1.5px solid rgba(255,255,255,.28);
   border-radius:999px;
   color:#fff;font-family:var(--font-display);font-weight:800;
   font-size:clamp(14px, 1.95vh, 18px);
   letter-spacing:.05em;
   display:flex;align-items:center;justify-content:center;gap:10px;
-  transition:transform .15s ease, opacity .15s ease, border-color .15s ease, color .15s ease;
+  transition:transform .15s ease, opacity .15s ease, border-color .15s ease, color .15s ease, background .15s ease;
   text-shadow:0 1px 2px rgba(0,0,0,.35);
 }
 .control-btn:not(:disabled):active{
   transform:scale(.97);
-  background:rgba(255,255,255,.10);
+  background:rgba(0,0,0,.5);
 }
 .control-btn:disabled{
   cursor:default;
@@ -478,37 +478,56 @@ const PROGRAMS = [
     id: "parlement",
     name: "Le parlement de l'enfant",
     logo: "Assets/Logo Parlement de l'enfant.png",
-    videos: [TEST_VIDEO, TEST_VIDEO, TEST_VIDEO]
+    videos: [
+      "Videos/1-PE/1 PDE - PARLEMENT ENFANT VF .mp4",
+      "Videos/1-PE/2 PDE - Club CAPE & plateforme.mp4",
+      "Videos/1-PE/3 PDE - BOOTCAMP 2024.mp4"
+    ]
   },
   {
     id: "2511",
     name: "Le centre d'écoute 2511",
     logo: "Assets/Logo 2511.png",
-    videos: [TEST_VIDEO, TEST_VIDEO, TEST_VIDEO]
+    videos: [
+      "Videos/2-2511/2511 - Plateforme 2511 VF.mp4"
+    ]
   },
   {
     id: "har",
     name: "Programme de protection de l'enfance",
     logo: "Assets/Logo HAR.png",
-    videos: [TEST_VIDEO, TEST_VIDEO, TEST_VIDEO]
+    videos: [
+      "Videos/3-HAR/1 HAR - Film harcelement avec ST.mp4",
+      "Videos/3-HAR/2 HAR - Formation Anxiété Scolaire .mp4",
+      "Videos/3-HAR/3 6eme Conf - OFF CAPSULE BOOTCAMP2.mp4",
+      "Videos/3-HAR/4 Capsule  finale Dessine ton avenir.mp4"
+    ]
   },
   {
     id: "tofoula",
     name: "La plateforme de suivi des indicateurs de l'enfance",
     logo: "Assets/Logo Tofoula.png",
-    videos: [TEST_VIDEO, TEST_VIDEO, TEST_VIDEO]
+    videos: [
+      "Videos/4-Tofoula/TOF - Presentation TOFOULA-PC3.mp4"
+    ]
   },
   {
     id: "dnpte",
     name: "Le DNPTE",
     logo: null,
-    videos: [TEST_VIDEO, TEST_VIDEO, TEST_VIDEO]
+    videos: [TEST_VIDEO]
   },
   {
     id: "me",
     name: "La santé mère-enfant",
     logo: "Assets/Logo ME.png",
-    videos: [TEST_VIDEO, TEST_VIDEO, TEST_VIDEO]
+    videos: [
+      "Videos/6-ME/ME - Bestoff - École des Mères.mp4",
+      "Videos/6-ME/ME - capsule-ep1.mp4",
+      "Videos/6-ME/ME - capsule-ep2.mp4",
+      "Videos/6-ME/ME - capsule-ep3.mp4",
+      "Videos/6-ME/ME - capsule-ep4.mp4"
+    ]
   }
 ];
 
@@ -569,6 +588,9 @@ function switchView(target){
 }
 
 function updateNavButtons(){
+  const controls = document.querySelector(".player-controls");
+  const onlyOne = currentProgram.videos.length <= 1;
+  controls.style.display = onlyOne ? "none" : "";
   btnPrev.disabled = currentIndex === 0;
   btnNext.disabled = currentIndex === currentProgram.videos.length - 1;
 }
