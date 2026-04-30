@@ -9,9 +9,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Cairo:wght@500;700&display=swap" rel="stylesheet">
 <style>
-/* ============================================================
-   ONDE — Tokens (alignés sur la charte 2026)
-   ============================================================ */
 :root{
   --green-100:#007344;
   --green-80:#338F69;
@@ -54,9 +51,6 @@ body{
 img{max-width:100%;display:block}
 button{font-family:inherit;border:none;background:none;color:inherit;cursor:pointer;padding:0}
 
-/* ============================================================
-   Stage portrait (1080×1920 idéal, fluide pour tout écran)
-   ============================================================ */
 .stage{
   position:fixed;inset:0;
   display:grid;place-items:center;
@@ -69,7 +63,6 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
   background:var(--bg);
   overflow:hidden;
 }
-/* Sur écran paysage (preview dev) : on simule un cadre portrait */
 @media (min-aspect-ratio: 1/1){
   .app{
     width:min(calc(100vh * 9 / 16), 100vw);
@@ -79,9 +72,6 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
   }
 }
 
-/* ============================================================
-   Vues (transition home <-> player)
-   ============================================================ */
 .view{
   position:absolute;inset:0;
   opacity:0;pointer-events:none;
@@ -89,18 +79,11 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
 }
 .view.active{opacity:1;pointer-events:auto}
 
-/* ============================================================
-   HOME — Hub des 6 programmes
-   ============================================================ */
 .home{
   display:flex;flex-direction:column;
   background:
-    /* Wash beige MARQUÉ au top-left pour faire ressortir le blob blanc */
     radial-gradient(75% 50% at 0% 0%, rgba(252,212,166,.95) 0%, rgba(252,212,166,.40) 35%, transparent 60%),
-    /* Wash beige clair haut-droite */
     radial-gradient(50% 35% at 100% 0%, var(--beige-40) 0%, transparent 70%),
-    /* Base : mêmes niveaux de luminosité que la version verte mais en beige
-       (96→94→84→68% lightness, exactement comme le green-20/40 transition) */
     linear-gradient(180deg,
       #fefaf3 0%,
       #fefaf3 45%,
@@ -128,7 +111,6 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
   min-height:18vh;
 }
 
-/* BLOB BLANC — forme officielle ONDE (Assets/Forme ONDE.png) + logo positionné dessus */
 .brand-wave{
   flex:0 0 auto;
   position:relative;
@@ -139,12 +121,10 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
 .brand-shape{
   width:100%;height:auto;
   display:block;
-  /* L'ombre suit naturellement la silhouette du PNG (les zones transparentes n'ombrent pas) */
   filter:drop-shadow(0 14px 28px rgba(122,79,30,.20)) drop-shadow(0 4px 10px rgba(0,0,0,.06));
 }
 .brand-logo{
   position:absolute;
-  /* Centré sur la zone large du shape */
   top:38%;left:48%;
   transform:translate(-50%,-50%);
   height:10.5vh;max-height:104px;min-height:64px;width:auto;
@@ -152,7 +132,6 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
 }
 
 .brand-meta{
-  /* Position absolue pour échapper au flex layout du brand-row */
   position:absolute;
   top:2vh;right:0%;
   font-family:var(--font-display);font-weight:700;
@@ -175,7 +154,6 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
   font-size:clamp(14px, 1.85vh, 19px);max-width:50ch;line-height:1.35;
 }
 
-/* Grille des 6 programmes — 2 colonnes × 3 rangs */
 .home-grid{
   flex:1 1 auto;
   min-height:0;
@@ -219,11 +197,9 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
   width:auto;height:auto;
   object-fit:contain;
   display:block;
-  /* Le multiply fait disparaître le fond blanc des JPEG dans le fond blanc de la carte */
   mix-blend-mode:multiply;
 }
 
-/* Placeholder pour logos non encore fournis */
 .tile-card .placeholder{
   aspect-ratio:1/1;max-width:55%;max-height:80%;width:auto;
   border-radius:50%;
@@ -245,7 +221,6 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
   color:var(--ink);
   line-height:1.2;
   padding:0 4px;
-  /* Pas d'hyphénation auto — wrap aux limites de mots, retours forcés via \n */
   word-break:normal;
   white-space:pre-line;
   display:flex;align-items:flex-start;justify-content:center;
@@ -273,9 +248,6 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
   100%{box-shadow:0 0 0 0 rgba(122,79,30,0)}
 }
 
-/* ============================================================
-   PLAYER — Lecteur reel plein écran
-   ============================================================ */
 .player{
   background:var(--beige-100);
   color:#fff;
@@ -290,7 +262,6 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
   object-fit:cover;
   transition:opacity .25s ease;
 }
-/* Loader pendant le buffering (vidéos longues / réseau lent) */
 .video-loader{
   position:absolute;inset:0;z-index:4;
   display:none;align-items:center;justify-content:center;
@@ -306,7 +277,6 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
 }
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* Header overlay — discret, en haut à gauche, sans masquer la vidéo */
 .player-header{
   position:absolute;top:0;left:0;right:0;
   padding:2.4vh 3.5% 6vh;
@@ -320,7 +290,6 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
 .btn-back{
   width:6.6vh;height:6.6vh;min-width:52px;min-height:52px;max-width:64px;max-height:64px;
   border-radius:50%;
-  /* Brun chaud translucide (campagne beige) */
   background:rgba(122,79,30,.45);
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   border:1.5px solid rgba(255,255,255,.4);
@@ -331,7 +300,6 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
 .btn-back:active{transform:scale(.92);background:rgba(122,79,30,.6)}
 .btn-back svg{width:48%;height:48%;color:#fff}
 
-/* Footer overlay (controls) — remontés dans la zone beige du bas de la vidéo */
 .player-controls{
   position:absolute;bottom:38%;left:0;right:0;
   padding:0 5%;
@@ -345,7 +313,6 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
 .control-btn{
   flex:1;
   padding:1.9vh 16px;
-  /* Même style que .btn-back : brun chaud translucide (palette beige campagne) */
   background:rgba(122,79,30,.45);
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   border:1.5px solid rgba(255,255,255,.4);
@@ -363,15 +330,11 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
 }
 .control-btn:disabled{
   cursor:default;
-  /* Identique à l'état actif, juste fade global */
   opacity:.45;
 }
 .control-btn svg{width:20px;height:20px;stroke-width:2.6}
 .control-btn:disabled svg{stroke-width:2.2}
 
-/* ============================================================
-   Petite "splash" au lancement (premier tap obligatoire si autoplay bloqué)
-   ============================================================ */
 .tap-overlay{
   position:absolute;inset:0;z-index:30;
   display:none;
@@ -392,9 +355,6 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
 <div class="stage">
 <main class="app">
 
-  <!-- =========================================================
-       VUE 1 — HOME (hub des 6 programmes)
-       ========================================================= -->
   <section id="view-home" class="view home active">
 
     <header class="home-header">
@@ -424,9 +384,6 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
 
   </section>
 
-  <!-- =========================================================
-       VUE 2 — PLAYER (reel vertical + nav prev/next)
-       ========================================================= -->
   <section id="view-player" class="view player">
 
     <div class="video-stage">
@@ -461,7 +418,6 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
       </div>
     </footer>
 
-    <!-- Overlay tactile pour débloquer l'autoplay avec son si nécessaire -->
     <div class="tap-overlay" id="tapOverlay">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
         <path d="M9 11V6a3 3 0 0 1 6 0v8"/>
@@ -479,12 +435,6 @@ button{font-family:inherit;border:none;background:none;color:inherit;cursor:poin
 </div>
 
 <script>
-/* ============================================================
-   Données des programmes
-   - Logos déjà fournis : ONDE, Parlement, 2511, Tofoula
-   - Logos à venir       : DNPTE, Harcèlement, Santé mère-enfant
-   - Vidéo de test partout, à remplacer par les vraies plus tard
-   ============================================================ */
 const TEST_VIDEO = "Videos/Video ONDE.mp4";
 
 const PROGRAMS = [
@@ -545,9 +495,6 @@ const PROGRAMS = [
   }
 ];
 
-/* ============================================================
-   Rendu de la home
-   ============================================================ */
 const grid = document.getElementById("grid");
 const viewHome = document.getElementById("view-home");
 const viewPlayer = document.getElementById("view-player");
@@ -568,9 +515,6 @@ PROGRAMS.forEach(p => {
   grid.appendChild(tile);
 });
 
-/* ============================================================
-   Player state
-   ============================================================ */
 const reel = document.getElementById("reel");
 const btnBack = document.getElementById("btnBack");
 const btnPrev = document.getElementById("btnPrev");
@@ -585,7 +529,7 @@ function openProgram(id){
   currentIndex = 0;
   updateNavButtons();
   switchView(viewPlayer);
-  loadVideo(0, /*tryUnmuted*/true);
+  loadVideo(0, true);
 }
 
 function backToHome(){
@@ -616,21 +560,17 @@ function loadVideo(idx, tryUnmuted){
   currentIndex = idx;
   const src = currentProgram.videos[idx];
 
-  // Cleanup éventuel timeout précédent
   if (loadTimeout) clearTimeout(loadTimeout);
 
-  // Fade out + loader pendant le buffering
   reel.style.opacity = "0";
   videoLoader.classList.add("show");
 
-  // URL encoder (gère les accents, espaces, &)
   reel.src = encodeURI(src);
   reel.muted = !tryUnmuted;
   reel.loop = false;
   reel.controls = false;
   reel.playsInline = true;
 
-  // loadeddata fire dès que la 1ʳᵉ frame est décodée (plus tôt que canplay)
   const cleanupListeners = () => {
     reel.removeEventListener("loadeddata", onReady);
     reel.removeEventListener("canplay", onReady);
@@ -649,14 +589,13 @@ function loadVideo(idx, tryUnmuted){
     cleanupListeners();
   };
   const onStalled = () => {
-    console.warn("[ONDE] Vidéo stalled (connexion lente ou serveur sans range) :", src);
+    console.warn("[ONDE] Vidéo stalled :", src);
   };
   reel.addEventListener("loadeddata", onReady, {once:true});
   reel.addEventListener("canplay", onReady, {once:true});
   reel.addEventListener("error", onError, {once:true});
   reel.addEventListener("stalled", onStalled);
 
-  // Filet de sécurité : si rien ne se passe au bout de 25s, on cache le loader
   loadTimeout = setTimeout(() => {
     console.warn("[ONDE] Timeout sur le chargement de :", src);
     videoLoader.classList.remove("show");
@@ -674,13 +613,11 @@ function loadVideo(idx, tryUnmuted){
 }
 
 reel.addEventListener("ended", () => {
-  // Auto-passage à la vidéo suivante si possible
   if (currentIndex < currentProgram.videos.length - 1){
     loadVideo(currentIndex + 1, true);
   }
 });
 
-/* Contrôles */
 btnBack.addEventListener("click", backToHome);
 btnPrev.addEventListener("click", () => {
   if (currentIndex > 0) loadVideo(currentIndex - 1, true);
@@ -689,24 +626,20 @@ btnNext.addEventListener("click", () => {
   if (currentIndex < currentProgram.videos.length - 1) loadVideo(currentIndex + 1, true);
 });
 
-/* Overlay tactile : on relance avec son */
 tapOverlay.addEventListener("click", () => {
   reel.muted = false;
   reel.play().then(() => {
     tapOverlay.classList.remove("show");
   }).catch(() => {
-    // dernier recours : muet
     reel.muted = true;
     reel.play();
     tapOverlay.classList.remove("show");
   });
 });
 
-/* Empêche le menu contextuel et la sélection sur la borne */
 document.addEventListener("contextmenu", e => e.preventDefault());
 document.addEventListener("dragstart", e => e.preventDefault());
 
-/* Plein écran au double-tap sur la borne (utile pour preview dev) */
 document.addEventListener("dblclick", () => {
   if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
   else document.exitFullscreen?.();
