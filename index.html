@@ -513,7 +513,7 @@ const PROGRAMS = [
     logo: "Assets/Logo HAR.png",
     videos: [
       "Videos/3-HAR/1 HAR - Film harcelement avec ST.mp4",
-      "Videos/3-HAR/2 HAR - Formation Anxiété Scolaire .mp4",
+      "Videos/3-HAR/2 HAR - Formation Anxiete Scolaire.mp4",
       "Videos/3-HAR/3 6eme Conf - OFF CAPSULE BOOTCAMP2.mp4",
       "Videos/3-HAR/4 Capsule  finale Dessine ton avenir.mp4"
     ]
@@ -537,7 +537,7 @@ const PROGRAMS = [
     name: "La santé mère-enfant",
     logo: "Assets/Logo ME.png",
     videos: [
-      "Videos/6-ME/ME - Bestoff - École des Mères.mp4",
+      "Videos/6-ME/ME - Bestoff - Ecole des Meres.mp4",
       "Videos/6-ME/ME - capsule-ep1.mp4",
       "Videos/6-ME/ME - capsule-ep2.mp4",
       "Videos/6-ME/ME - capsule-ep3.mp4",
@@ -611,33 +611,63 @@ function updateNavButtons(){
 }
 
 const videoLoader = document.getElementById("videoLoader");
+let loadTimeout = null;
 
 function loadVideo(idx, tryUnmuted){
   currentIndex = idx;
   const src = currentProgram.videos[idx];
 
-  // Fade out + loader pendant le buffering (utile pour les vidéos longues)
+  // Cleanup éventuel timeout précédent
+  if (loadTimeout) clearTimeout(loadTimeout);
+
+  // Fade out + loader pendant le buffering
   reel.style.opacity = "0";
   videoLoader.classList.add("show");
 
-  reel.src = src;
-  reel.muted = !tryUnmuted; // on tente direct avec son
+  // URL encoder (gère les accents, espaces, &)
+  reel.src = encodeURI(src);
+  reel.muted = !tryUnmuted;
   reel.loop = false;
   reel.controls = false;
   reel.playsInline = true;
 
-  // On fade-in et on cache le loader dès que la première frame est prête
-  const onCanPlay = () => {
+  // loadeddata fire dès que la 1ʳᵉ frame est décodée (plus tôt que canplay)
+  const cleanupListeners = () => {
+    reel.removeEventListener("loadeddata", onReady);
+    reel.removeEventListener("canplay", onReady);
+    reel.removeEventListener("error", onError);
+    reel.removeEventListener("stalled", onStalled);
+  };
+  const onReady = () => {
     reel.style.opacity = "1";
     videoLoader.classList.remove("show");
-    reel.removeEventListener("canplay", onCanPlay);
+    if (loadTimeout) clearTimeout(loadTimeout);
+    cleanupListeners();
   };
-  reel.addEventListener("canplay", onCanPlay);
+  const onError = (e) => {
+    console.error("[ONDE] Erreur chargement vidéo :", src, reel.error);
+    videoLoader.classList.remove("show");
+    cleanupListeners();
+  };
+  const onStalled = () => {
+    console.warn("[ONDE] Vidéo stalled (connexion lente ou serveur sans range) :", src);
+  };
+  reel.addEventListener("loadeddata", onReady, {once:true});
+  reel.addEventListener("canplay", onReady, {once:true});
+  reel.addEventListener("error", onError, {once:true});
+  reel.addEventListener("stalled", onStalled);
+
+  // Filet de sécurité : si rien ne se passe au bout de 25s, on cache le loader
+  loadTimeout = setTimeout(() => {
+    console.warn("[ONDE] Timeout sur le chargement de :", src);
+    videoLoader.classList.remove("show");
+    reel.style.opacity = "1";
+    cleanupListeners();
+  }, 25000);
 
   const playPromise = reel.play();
   if (playPromise && playPromise.catch){
     playPromise.catch(() => {
-      // L'autoplay avec son est bloqué — on affiche l'overlay tactile.
       tapOverlay.classList.add("show");
     });
   }
